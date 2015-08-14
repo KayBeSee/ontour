@@ -1,0 +1,23 @@
+<section class="page view-host">
+
+  <div class="row" id="hostId-header">
+    <div class="medium-12 column">
+      <h2>{{ model.artistName }}</h2>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 15px">
+    <div class="medium-6 small-12 column">
+      {{ model.datetime }}  <br />
+      {{ model.ticket_url }}
+    </div>
+
+    <div class="medium-6 small-12 column">
+      <h2>Venue Information</h2>
+      <b>Name:</b> {{ model.venue.name }}  <br />
+      <b>City:</b> {{ model.venue.city }} <br />
+      <b>Region:</b> {{ model.venue.region }}  <br />
+    </div>
+  </div>
+
+</section>

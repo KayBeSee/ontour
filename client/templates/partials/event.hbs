@@ -1,0 +1,8 @@
+<tr>
+  <td>{{ model.readableDate }}</td>
+  <td>{{ model.artistName }}</td>
+  <td>{{ model.venue.city }}, {{ model.venue.region }}</td>
+  <td data-hook="venue_name">{{ model.venue.name }}</td>
+  <td>{{ model.ticket_status }}</td>
+  <td><a href="/events/{{ model.id }}">Details</a></td>
+</tr>
