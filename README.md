@@ -1,23 +1,14 @@
-# Ampersand test app.
+# OnTour
 
-This app was generated with the [ampersand cli tool](http://ampersandjs.com/learn/quick-start-guide).
+An easy to read, easy to organize way of finding live music.
 
 ## How to run it
 
-1. download/install [node.js](http://nodejs.org/)
-1. install dependencies: `npm install`
-1. run it: `npm start`
-1. open http://localhost:3000 in a browser
-
-## How it's structured
-
-See docs: http://ampersandjs.com/
-Curated modules: http://tools.ampersandjs.com/
+1. git clone
+1. npm install
+1. run mongo
+1. npm start
 
 ## Credits
 
-Built by folks at [&yet](http://andyet.com).
-
-## Want a deeper understanding?
-
-Get the book: http://humanjavascript.com
+[Kevin Mulcrone](http://KayBeSee.com).
