@@ -1,32 +1,36 @@
 var AmpersandModel = require('ampersand-model');
+var moment = require('moment');
 
 
 module.exports = AmpersandModel.extend({
   idAttribute: '_id',
   props: {
     _id: 'string',
-    id: 'number',
-    url: 'string',
+    bitId: 'number',
+    title: 'string',
     datetime: 'string',
     ticket_url: 'string',
+    ticket_type: 'string',
+    ticket_status: 'string',
+    facebook_rsvp_url: 'string',
     artists: [{
       name: 'string',
-      url: 'string',
-      mbid: 'string'
+      image_url: 'string',
+      thumb_url: 'string',
+      facebook_tour_dates_url: 'string',
+      facebook_page_url: 'string',
+      tracker_count: 'number',
+      website: 'string'
     }],
     venue: {
-      id: 'number',
-      url: 'string',
       name: 'string',
       city: 'string',
       region: 'string',
       country: 'string',
       latitude: 'number',
-      longitude: 'number'
-    },
-    ticket_status: 'string',
-    on_sale_datetime: 'string'
-    },
+      longitude: 'number',
+    }
+  },
   derived: {
     artistName: {
       deps: ['artists'],
@@ -34,12 +38,37 @@ module.exports = AmpersandModel.extend({
         return this.artists[0].name;
       }
     },
+    artistImageUrl: {
+      deps: ['artists'],
+      fn: function () {
+        return this.artists[0].image_url;
+      }
+    },
+    artistFacebookPageUrl: {
+      deps: ['artists'],
+      fn: function () {
+        return this.artists[0].facebook_page_url;
+      }
+    },
+    artistWebsiteUrl: {
+      deps: ['artists'],
+      fn: function () {
+        return this.artists[0].website;
+      }
+    },
     readableDate: {
       deps: ['datetime'],
       fn: function () {
         var date = new Date(this.datetime);
-        return date.toDateString();
+        return moment(date).format('LLLL');
       }
     },
+    sortableDate: {
+      deps: ['datetime'],
+      fn: function() {
+        var date = new Date(this.datetime);
+        return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
+      }
+    }
   }
 });

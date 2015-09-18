@@ -6,8 +6,8 @@ module.exports = View.extend({
   bindings: eventbindings,
   initialize: function (spec) {
     var self = this;
-    window.app.events.getOrFetch(spec.model.id, {all: true}, function (err, model) {
-      if (err) window.alert('couldn\'t find a event with id: ' + spec.id);
+    window.app.events.getOrFetch(spec.model._id, {all: true}, function (err, model) {
+      if (err) window.alert('couldn\'t find a event with id: ' + spec._id);
       self.model = model;
     });
   },

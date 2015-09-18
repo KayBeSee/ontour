@@ -11,6 +11,8 @@ var semiStatic   = require('semi-static');
 var serveStatic  = require('serve-static');
 var stylizer     = require('stylizer');
 var request      = require('request');
+var mongoose     = require('mongoose');
+process.config   = require('./config');
 
 var app          = express();
 
@@ -54,7 +56,6 @@ if (config.isDev) {
   }));
 }
 
-
 // -----------------
 // Set our client config cookie
 // -----------------
@@ -63,101 +64,50 @@ app.use(function (req, res, next) {
   next();
 });
 
-// MongoDB Setup
-var MongoClient  = require('mongodb').MongoClient;
-var assert       = require('assert');
-var mongoUrl     = 'mongodb://localhost:27017/ontour';
 
-var artistList = ['String Cheese Incident', 'The Jauntee', 'The Southern Belles', 'The Disco Biscuits',
-                  'Greensky Bluegrass'];
+mongoose.connect(process.config.mongoUrl);
+
+var api = require('./server/api');
+
+app.get('/api/events', function (req, res) {
+  api.getAllEvents( function (err, results) {
+    res.send(results);
+  });
+});
+
+app.get('/api/events/:id', function (req, res) {
+  api.getEventById( req.params.id, function (err, event) {
+    res.send(event);
+  });
+});
 
 
-// var insertArtistEvent = function(db, events, callback) {
-//   db.collection('events').insertMany(events, null, function(err, result) {
-//     assert.equal(err, null);
-//     callback(err, result);
-//   });
-// };
-
-
+// To add new artists
+ // 'Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee',
+                  // 'Adventure Club', 'Kaskade', 'Alabama Shakes', 'U2', 'Claude von Stroke', 'Feed Me', 'Madeon', 'Porter Robinson', 'Audien'
+// var artistList = ['Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee'];
 // artistList.forEach(function (current, index, array) {
-//   request('http://api.bandsintown.com/events/search?artists[]=' + current + '&format=json&app_id=kaybesee', function(err, response, events) {
-//     MongoClient.connect(mongoUrl, function (err, db){
-//       assert.equal(null, err);
-//       console.log(events);
-//       insertArtistEvent(db, events, function(err, result) {
-//         db.close();
-//         console.log('Added ' + result[0].artists[0].name + ' events to database');
+//   request('http://api.bandsintown.com/artists/' + current + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function(err, response, events) {
+//     var artistEvents = events;
+//     artistEvents = JSON.parse(artistEvents);
+//     artistEvents.forEach( function (current, index, array) {
+//       api.addNewEvent(current, function (err, event) {
+//         if(err) console.log(err);
+//         console.log('Added Event ' + event.id);
 //       });
-//     });
+//     })
+//     console.log(artistEvents);
 //   });
 // });
 
-
-var getEvents = function(db, callback) {
-   var cursor = db.collection('events').find( );
-   var events = []
-   cursor.each(function(err, doc) {
-      assert.equal(err, null);
-      if (doc != null) {
-         events.push(doc);
-      } else {
-         callback(err, events);
-      }
-   });
-};
-
-var insertEvent = function(db, newEvent, callback) {
-   db.collection('events').insertOne(newEvent , function(err, result) {
-    assert.equal(err, null);
-    console.log("Inserted " + newEvent.id + " into the events collection.");
-    callback(result);
-  });
-};
-
-var updateEvent = function(db, updatedEvent, callback) {
-   db.collection('events').insertOne( newEvent , function(err, result) {
-    assert.equal(err, null);
-    console.log("Inserted " + newEvent.id + " into the events collection.");
-    callback(result);
-  });
-};
-
-
-app.get('/api/events', function (req, res) {
-  MongoClient.connect(mongoUrl, function(err, db) {
-    assert.equal(null, err);
-    getEvents(db, function(err, events) {
-      if (err) return res.status(400).send(err);
-      res.status(200).send(events);
-      db.close();
-    });
-  });
-});
-
-app.put('/api/events/:id', function (req, res) {
-  console.log(req.body);
-  // MongoClient.connect(mongoUrl, function(err, db) {
-  //   assert.equal(null, err);
-  //   updateEvent(db, req.body, function(err, events) {
-  //     if (err) return res.status(400).send(err);
-  //     res.status(200).send(events);
-  //     db.close();
-  //   });
-  // });
-});
-
-app.post('/api/events/create', function (req, res) {
-  MongoClient.connect(mongoUrl, function(err, db) {
-    assert.equal(null, err);
-    insertEvent(db, req.body, function(err, events) {
-      if (err) return res.status(400).send(err);
-      res.status(200).send(events);
-      db.close();
-    });
-  });
-});
-
+// Get all new data.
+// request('http://api.bandsintown.com/events/daily?format=json&app_id=YOUR_APP_ID', function(err, response, events) {
+//   newEvents = JSON.parse(events);
+//   Event.collection.insert(newEvents, function (err, docs){
+//     if(err) console.log(err);
+//     console.log('%n events were successfully stored.', docs.length);
+//   });
+// });
 
 
 
@@ -177,6 +127,7 @@ new Moonboots({
     stylesheets: [
       fixPath('public/css/bootstrap.css'),
       fixPath('public/css/app.css'),
+      fixPath('public/css/style.css'),
       fixPath('public/css/kendo.common.min.css')
     ],
     browserify: {

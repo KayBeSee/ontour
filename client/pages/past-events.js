@@ -23,7 +23,7 @@ module.exports = PageView.extend({
       this.queryByHook('event-list'),
       { parent: this,
         filter: function(model){
-          return Date.now() <  Date.parse(model.datetime);
+          return Date.now() >  Date.parse(model.datetime);
         }
       }
     );

@@ -1,15 +1,26 @@
-<section class="page view-host">
+<section class="page view-event">
 
-  <div class="row" id="hostId-header">
+  <div class="row">
     <div class="medium-12 column">
-      <h2>{{ model.artistName }}</h2>
+      <h2>{{ model.artistName }} @ {{ model.venue.name }}</h2>
     </div>
   </div>
 
+
   <div class="row" style="margin-top: 15px">
     <div class="medium-6 small-12 column">
-      {{ model.datetime }}  <br />
-      {{ model.ticket_url }}
+      <img src="{{ model.artistImageUrl }}" />
+    </div>
+
+    <div class="medium-6 small-12 column">
+      {{ model.readableDate }}
+    </div>
+
+    <div class="medium-6 small-12 column">
+      <h2>Artist Information</h2>
+      <b>Name:</b> {{ model.artistName }}  <br />
+      <b>Facebook:</b> {{ model.artistFacebookPageUrl }} <br />
+      <b>Website:</b> {{ model.artistWebsiteUrl }}  <br />
     </div>
 
     <div class="medium-6 small-12 column">
@@ -17,6 +28,11 @@
       <b>Name:</b> {{ model.venue.name }}  <br />
       <b>City:</b> {{ model.venue.city }} <br />
       <b>Region:</b> {{ model.venue.region }}  <br />
+    </div>
+
+    <div class="medium-6 small-12 column">
+      <a class="button" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>
+      <a class="button" href="{{ model._id }}/edit">Edit Event</a>
     </div>
   </div>
 

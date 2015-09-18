@@ -15,7 +15,6 @@ module.exports = PageView.extend({
 
   initialize: function (spec) {
     var self = this;
-    this.collection = new AmpersandCollection();
     app.events.getOrFetch(spec.id, function (err, eventModel) {
       if (err) alert('couldn\'t find a model with id: ' + spec.id);
       self.model = eventModel;

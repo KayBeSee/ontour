@@ -7,20 +7,24 @@ var PersonEditPage = require('./pages/person-edit');
 var PersonViewPage = require('./pages/person-view');
 var EventViewPage  = require('./pages/event');
 var EventsPage     = require('./pages/events');
+var PastEventsPage     = require('./pages/past-events');
 var EventEditPage  = require('./pages/event-edit');
 
 
 module.exports = Router.extend({
   routes: {
-    ''                : 'home',
-    'events/:id'      : 'event',
-    'events/:id/edit' : 'event',
-    'events'          : 'events',
-    'info'            : 'info',
-    'person/add'      : 'personAdd',
-    'person/:id'      : 'personView',
-    'person/:id/edit' : 'personEdit',
-    '(*path)'         : 'catchAll'
+    ''                    : 'home',
+    'events/:id'          : 'eventById',
+    'events/:artist_name' : 'eventByArtist',
+    'events/:id/edit'     : 'eventEdit',
+    'event/new'           : 'eventCreate',
+    'events'              : 'events',
+    'past-events'         : 'pastEvents',
+    'info'                : 'info',
+    'person/add'          : 'personAdd',
+    'person/:id'          : 'personView',
+    'person/:id/edit'     : 'personEdit',
+    '(*path)'             : 'catchAll'
   },
 
   // ------- ROUTE HANDLERS ---------
@@ -30,7 +34,7 @@ module.exports = Router.extend({
     }));
   },
 
-  event: function (id) {
+  eventById: function (id) {
     this.trigger('page', new EventViewPage({
       id: id
     }));
@@ -38,7 +42,12 @@ module.exports = Router.extend({
 
   events: function () {
     this.trigger('page', new EventsPage({
-      model: me,
+      collection: app.events
+    }));
+  },
+
+  pastEvents: function () {
+    this.trigger('page', new PastEventsPage({
       collection: app.events
     }));
   },

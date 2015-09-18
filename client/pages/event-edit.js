@@ -23,7 +23,7 @@ module.exports = PageView.extend({
       container: 'form',
       waitFor: 'model',
       prepareView: function (el) {
-        return new Event({
+        return new EventForm({
           el: el,
           model: this.model,
           submitCallback: function (data) {
