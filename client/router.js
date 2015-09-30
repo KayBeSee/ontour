@@ -7,13 +7,17 @@ var PersonEditPage = require('./pages/person-edit');
 var PersonViewPage = require('./pages/person-view');
 var EventViewPage  = require('./pages/event');
 var EventsPage     = require('./pages/events');
-var PastEventsPage     = require('./pages/past-events');
+var PastEventsPage = require('./pages/past-events');
 var EventEditPage  = require('./pages/event-edit');
+var UserViewPage   = require('./pages/user');
 
 
 module.exports = Router.extend({
   routes: {
     ''                    : 'home',
+    'login'               : 'loginFacebook',
+    'logout'              : 'logoutFacebook',
+    'profile/:id'         : 'profileById',
     'events/:id'          : 'eventById',
     'events/:artist_name' : 'eventByArtist',
     'events/:id/edit'     : 'eventEdit',
@@ -31,6 +35,20 @@ module.exports = Router.extend({
   home: function () {
     this.trigger('page', new HomePage({
       model: me
+    }));
+  },
+
+  loginFacebook: function () {
+    window.location.href = './login/facebook';
+  },
+
+  logoutFacebook: function () {
+    window.location.href = './logout/facebook';
+  },
+
+  profileById: function (id) {
+    this.trigger('page', new UserViewPage({
+      id: id
     }));
   },
 

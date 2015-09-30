@@ -1,20 +1,27 @@
-var path         = require('path');
+var path             = require('path');
 
-var bodyParser   = require('body-parser');
-var compress     = require('compression');
-var cookieParser = require('cookie-parser');
-var config       = require('getconfig');
-var express      = require('express');
-var helmet       = require('helmet');
-var Moonboots    = require('moonboots-express');
-var semiStatic   = require('semi-static');
-var serveStatic  = require('serve-static');
-var stylizer     = require('stylizer');
-var request      = require('request');
-var mongoose     = require('mongoose');
-process.config   = require('./config');
+var bodyParser       = require('body-parser');
+var compress         = require('compression');
+var cookieParser     = require('cookie-parser');
+var config           = require('getconfig');
+var express          = require('express');
+var helmet           = require('helmet');
+var Moonboots        = require('moonboots-express');
+var semiStatic       = require('semi-static');
+var serveStatic      = require('serve-static');
+var stylizer         = require('stylizer');
 
-var app          = express();
+var request          = require('request');
+var mongoose         = require('mongoose');
+var passport         = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
+var session          = require('express-session');
+var RedisStore       = require('connect-redis')(session);
+var User             = require('./server/models/user');
+
+process.config       = require('./config');
+
+var app              = express();
 
 // a little helper for fixing paths for various environments
 var fixPath = function (pathString) {
@@ -85,20 +92,25 @@ app.get('/api/events/:id', function (req, res) {
 // To add new artists
  // 'Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee',
                   // 'Adventure Club', 'Kaskade', 'Alabama Shakes', 'U2', 'Claude von Stroke', 'Feed Me', 'Madeon', 'Porter Robinson', 'Audien'
-// var artistList = ['Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee'];
-// artistList.forEach(function (current, index, array) {
-//   request('http://api.bandsintown.com/artists/' + current + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function(err, response, events) {
-//     var artistEvents = events;
-//     artistEvents = JSON.parse(artistEvents);
-//     artistEvents.forEach( function (current, index, array) {
-//       api.addNewEvent(current, function (err, event) {
-//         if(err) console.log(err);
-//         console.log('Added Event ' + event.id);
-//       });
-//     })
-//     console.log(artistEvents);
-//   });
-// });
+var artistList = ['Phish', 'Widespread Panic', 'String Cheese Incident'];
+artistList.forEach(function (current, index, array) {
+  request('http://api.bandsintown.com/artists/' + current + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function(err, response, events) {
+    var artistEvents = events;
+    artistEvents = JSON.parse(artistEvents);
+    artistEvents.forEach( function (current, index, array) {
+      console.log('current' + current);
+      api.getEventByBitId(current.id, function (err, event){
+        if(err) console.log('getEventByBitId error: (' + current.id + ') ' + err);
+        if(!event) {
+          api.addNewEvent(current, function (err, event) {
+            if(err) console.log('addNewEvent error: ' + err);
+            console.log('Added Event ' + event._id);
+          });
+        }
+      });
+    });
+  });
+});
 
 // Get all new data.
 // request('http://api.bandsintown.com/events/daily?format=json&app_id=YOUR_APP_ID', function(err, response, events) {
@@ -110,6 +122,87 @@ app.get('/api/events/:id', function (req, res) {
 // });
 
 
+// ---------------------------------------------------
+// Redis Session Store
+// ---------------------------------------------------
+app.use(session({
+  key: process.config.key,
+  secret: process.config.redis.secret,
+  cookie: process.config.redis.cookie,
+  resave: true,
+  saveUninitialized: true,
+  store: new RedisStore({
+    host: process.config.redis.host,
+    port: process.config.redis.port,
+    pass: process.config.redis.auth,
+    db: 4
+  })
+}));
+
+
+// ---------------------------------------------------
+// Login Functionality
+// ---------------------------------------------------
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+passport.use('facebook', new FacebookStrategy({
+  clientID        : process.config.facebook_api_key,
+  clientSecret    : process.config.facebook_api_secret,
+  callbackURL     : process.config.fb_callback_url,
+  profileFields: ['id', 'displayName', 'photos', 'emails', 'profileUrl']
+},
+  function(access_token, refresh_token, profile, done) {
+    process.nextTick(function() {
+      User.findOne({ 'fbId' : profile.id }, function(err, user) {
+        console.log(user);
+        if (err)
+          return done(err);
+
+          if (!err && user != null) {
+            done(err, user);
+          } else {
+            var newUser = new User();
+
+            newUser.fbId    = profile.id;
+            newUser.fb_access_token = access_token;
+            newUser.name  = profile.displayName;
+            newUser.fbUrl = profile.profileUrl;
+            newUser.email = profile.emails[0].value;
+            newUser.picture = profile.photos[0].value;
+
+            User.create( newUser, function (err, newUser) {
+              if (err) done(err, null);
+              done(null, newUser);
+            });
+         }
+      });
+    });
+}));
+
+app.get('/authenticate', function (req, res){
+  if(req.session.user) return res.json(req.session.user);
+  res.status(403).json({error: '/authenticate error'});
+});
+
+app.get('/login/facebook', passport.authenticate('facebook'));
+
+app.get('/login/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect : '/events',
+    failureRedirect : '/more-info'
+  })
+);
 
 // ---------------------------------------------------
 // Configure Moonboots to serve our client application

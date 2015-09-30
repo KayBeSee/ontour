@@ -15,9 +15,42 @@ require('../helpers/metrics');
 
 module.exports = View.extend({
   template: require('../templates/body.hbs'),
+  bindings: {
+    'model.username': {
+      hook: 'username'
+    },
+    'model.authenticated': [
+      {
+        type: 'booleanClass',
+        hook: 'login',
+        name: 'hide',
+        yes: 'hide',
+        no: 'visible'
+      },
+      {
+        type: 'booleanClass',
+        hook: 'logout',
+        name: 'hide',
+        yes: 'visible',
+        no: 'hide'
+      }
+    ]
+  },
   initialize: function () {
     // this marks the correct nav item selected
     this.listenTo(app.router, 'page', this.handleNewPage);
+
+    window.me.fetch({
+      success: function () {
+        me.authenticated = true;
+      },
+      error: function () {
+        // Removes Aperture integration.
+        me.authenticated = false;
+        // window.location.href = config.authUrl + '?redirect=' + config.localUrl;
+      }
+    });
+
   },
   events: {
     'click a[href]': 'handleLinkClick'

@@ -49,6 +49,13 @@ exports.getById = function(id, done) {
   });
 }
 
+exports.getByBitId = function(id, done) {
+  Event.findById({'bitId' : id }, function (err, event) {
+    if (err) done(err, null);
+    done(null, event);
+  });
+}
+
 exports.addVenueToEvent = function (eventId, venue) {
   // TODO: Add venueId to venue array in Event object.
 }
