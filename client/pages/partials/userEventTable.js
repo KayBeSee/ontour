@@ -1,30 +1,21 @@
-var PageView   = require('./base');           // grab base page view
-var EventView = require('../pages/partials/event');  // grab event view
+var PageView   = require('../base');           // grab base page view
+var EventView = require('../../pages/partials/event');  // grab event view
 
 module.exports = PageView.extend({
   pageTitle: 'Event Collection',
-  template: require('../templates/pages/events.hbs'),
+  template: require('../../templates/pages/events.hbs'),
 
   initialize: function () {
-    this.collection.fetch({
-      success: function () {
-        this.render().kendoGrid();
-      }.bind(this)
-    });
+    this.render().kendoGrid();
   },
 
   render: function () {
     this.renderWithTemplate();
-    console.log(this.collection);
     this.renderCollection(
       this.collection,
       EventView,
       this.queryByHook('event-list'),
-      { parent: this,
-        filter: function(model){
-          return Date.now() <  Date.parse(model.datetime);
-        }
-      }
+      { parent: this }
     );
     return this;
   },

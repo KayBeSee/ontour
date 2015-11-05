@@ -2,14 +2,12 @@
 var Router         = require('ampersand-router');
 var HomePage       = require('./pages/home');
 var InfoPage       = require('./pages/info');
-var PersonAddPage  = require('./pages/person-add');
-var PersonEditPage = require('./pages/person-edit');
-var PersonViewPage = require('./pages/person-view');
 var EventViewPage  = require('./pages/event');
 var EventsPage     = require('./pages/events');
 var PastEventsPage = require('./pages/past-events');
 var EventEditPage  = require('./pages/event-edit');
-var UserViewPage   = require('./pages/user');
+var UserViewPage  = require('./pages/user');
+var UsersPage     = require('./pages/users');
 
 
 module.exports = Router.extend({
@@ -17,7 +15,8 @@ module.exports = Router.extend({
     ''                    : 'home',
     'login'               : 'loginFacebook',
     'logout'              : 'logoutFacebook',
-    'profile/:id'         : 'profileById',
+    'users'               : 'users',
+    'users/:id'           : 'user',
     'events/:id'          : 'eventById',
     'events/:artist_name' : 'eventByArtist',
     'events/:id/edit'     : 'eventEdit',
@@ -25,9 +24,6 @@ module.exports = Router.extend({
     'events'              : 'events',
     'past-events'         : 'pastEvents',
     'info'                : 'info',
-    'person/add'          : 'personAdd',
-    'person/:id'          : 'personView',
-    'person/:id/edit'     : 'personEdit',
     '(*path)'             : 'catchAll'
   },
 
@@ -44,12 +40,6 @@ module.exports = Router.extend({
 
   logoutFacebook: function () {
     window.location.href = './logout/facebook';
-  },
-
-  profileById: function (id) {
-    this.trigger('page', new UserViewPage({
-      id: id
-    }));
   },
 
   eventById: function (id) {
@@ -80,25 +70,21 @@ module.exports = Router.extend({
     this.trigger('page', new EventEditPage());
   },
 
+  users: function () {
+    this.trigger('page', new UsersPage({
+      collection: app.users
+    }));
+  },
+
+  user: function (id) {
+    this.trigger('page', new UserViewPage({
+      id: id
+    }));
+  },
+
   info: function () {
     this.trigger('page', new InfoPage({
       model: me
-    }));
-  },
-
-  personAdd: function () {
-    this.trigger('page', new PersonAddPage());
-  },
-
-  personEdit: function (id) {
-    this.trigger('page', new PersonEditPage({
-      id: id
-    }));
-  },
-
-  personView: function (id) {
-    this.trigger('page', new PersonViewPage({
-      id: id
     }));
   },
 

@@ -1,8 +1,8 @@
 var Collection = require('ampersand-rest-collection');
-var Person = require('./person');
+var User = require('./user');
 
 
 module.exports = Collection.extend({
-    model: Person,
-    url: '/api/people'
+    model: User,
+    url: '/api/users'
 });

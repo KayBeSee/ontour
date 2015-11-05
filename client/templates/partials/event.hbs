@@ -5,5 +5,7 @@
   <td data-hook="venue_name">{{ model.venue.name }}</td>
   <td>
     <a href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a> -
-    <a href="/events/{{ model._id }}">Details</a></td>
+    <a href="/events/{{ model._id }}">Details</a>
+    <button class="btn-success btn-xs" data-hook="attend">Attend</button>
+  </td>
 </tr>

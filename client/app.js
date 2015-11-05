@@ -7,11 +7,10 @@ var Router = require('./router');
 var tracking = require('./helpers/metrics');
 var MainView = require('./views/main');
 var Me = require('./models/me');
-var People = require('./models/persons');
+var Users = require('./models/users');
 var domReady = require('domready');
 
 var Events = require('./models/events');
-
 
 module.exports = {
   // this is the the whole app initter
@@ -21,7 +20,7 @@ module.exports = {
     // create our global 'me' object and an empty collection for our people
     // models.
     window.me = new Me();
-    this.people = new People();
+    this.users = new Users();
     this.events = new Events();
 
     // init our URL handlers and the history tracker

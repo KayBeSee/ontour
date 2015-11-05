@@ -2,7 +2,7 @@ var AmpersandModel = require('ampersand-model');
 
 
 module.exports = AmpersandModel.extend({
-  url: '/authenticate',
+  idAttribute: '_id',
   props: {
     _id: ['string'],
     first_name: ['string'],

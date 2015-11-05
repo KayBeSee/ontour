@@ -71,56 +71,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 mongoose.connect(process.config.mongoUrl);
-
-var api = require('./server/api');
-
-app.get('/api/events', function (req, res) {
-  api.getAllEvents( function (err, results) {
-    res.send(results);
-  });
-});
-
-app.get('/api/events/:id', function (req, res) {
-  api.getEventById( req.params.id, function (err, event) {
-    res.send(event);
-  });
-});
-
-
-// To add new artists
- // 'Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee',
-                  // 'Adventure Club', 'Kaskade', 'Alabama Shakes', 'U2', 'Claude von Stroke', 'Feed Me', 'Madeon', 'Porter Robinson', 'Audien'
-var artistList = ['Phish', 'Widespread Panic', 'String Cheese Incident'];
-artistList.forEach(function (current, index, array) {
-  request('http://api.bandsintown.com/artists/' + current + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function(err, response, events) {
-    var artistEvents = events;
-    artistEvents = JSON.parse(artistEvents);
-    artistEvents.forEach( function (current, index, array) {
-      console.log('current' + current);
-      api.getEventByBitId(current.id, function (err, event){
-        if(err) console.log('getEventByBitId error: (' + current.id + ') ' + err);
-        if(!event) {
-          api.addNewEvent(current, function (err, event) {
-            if(err) console.log('addNewEvent error: ' + err);
-            console.log('Added Event ' + event._id);
-          });
-        }
-      });
-    });
-  });
-});
-
-// Get all new data.
-// request('http://api.bandsintown.com/events/daily?format=json&app_id=YOUR_APP_ID', function(err, response, events) {
-//   newEvents = JSON.parse(events);
-//   Event.collection.insert(newEvents, function (err, docs){
-//     if(err) console.log(err);
-//     console.log('%n events were successfully stored.', docs.length);
-//   });
-// });
-
 
 // ---------------------------------------------------
 // Redis Session Store
@@ -160,29 +111,32 @@ passport.use('facebook', new FacebookStrategy({
   clientID        : process.config.facebook_api_key,
   clientSecret    : process.config.facebook_api_secret,
   callbackURL     : process.config.fb_callback_url,
-  profileFields: ['id', 'displayName', 'photos', 'emails', 'profileUrl']
+  profileFields   : ['id', 'photos', 'emails', 'profileUrl', 'last_name', 'first_name', 'locale']
 },
   function(access_token, refresh_token, profile, done) {
     process.nextTick(function() {
       User.findOne({ 'fbId' : profile.id }, function(err, user) {
-        console.log(user);
         if (err)
           return done(err);
 
           if (!err && user != null) {
+            console.log('User ' + user._id + 'signed in');
             done(err, user);
           } else {
             var newUser = new User();
-
+            console.log(profile);
             newUser.fbId    = profile.id;
             newUser.fb_access_token = access_token;
-            newUser.name  = profile.displayName;
+            newUser.first_name  = profile.name.givenName;
+            newUser.last_name = profile.name.familyName;
             newUser.fbUrl = profile.profileUrl;
             newUser.email = profile.emails[0].value;
             newUser.picture = profile.photos[0].value;
+            newUser.signupProvider = profile.provider;
 
             User.create( newUser, function (err, newUser) {
               if (err) done(err, null);
+              console.log('User ' + newUser._id + ' created');
               done(null, newUser);
             });
          }
@@ -190,12 +144,49 @@ passport.use('facebook', new FacebookStrategy({
     });
 }));
 
+var api = require('./server/api');
+
+// // To add new artists
+//  'Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee', 'The Southern Belles', 'The Werks', 'Umphreys McGee'
+//                   'Adventure Club', 'Kaskade', 'Alabama Shakes', 'U2', 'Claude von Stroke', 'Feed Me', 'Madeon', 'Porter Robinson', 'Audien', 'Gramatik', 'Griz', 'Bassnectar'
+// var artistList = [ 'Phish', 'String Cheese Incident', 'Widespread Panic','Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee', 'The Southern Belles', 'Keller Williams'];
+// artistList.forEach(function (current, index, array) {
+//   request('http://api.bandsintown.com/artists/' + current + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function(err, response, events) {
+//     var artistEvents = events;
+//     artistEvents = JSON.parse(artistEvents);
+//     artistEvents.forEach( function (current, index, array) {
+//       api.addNewEvent(current, function (err, event) {
+//         console.log('Added Event ' + event._id);
+//       });
+//     });
+//   });
+// });
+
 app.get('/authenticate', function (req, res){
-  if(req.session.user) return res.json(req.session.user);
-  res.status(403).json({error: '/authenticate error'});
+  if(req.session.passport.user) {
+    api.getUserById(req.session.passport.user, function (err, user) {
+      if(err) return res.json(err);
+      return res.json(user);
+    });
+  }
+  else {
+    res.json({error: 'User not logged in.'});
+  }
 });
 
-app.get('/login/facebook', passport.authenticate('facebook'));
+app.post('/authenticate', function (req, res){
+  api.updateUser(req.body, function (user) {
+    if (user == null) return res.json('Error updating user ' + req.body._id);
+    res.json(user);
+  });
+});
+
+app.get('/login/facebook', passport.authenticate('facebook'),
+        // {scope: ['user_location', 'user_actions.music', 'user_birthday', 'user_friends']}),
+  function (req, res){
+  req.session.passport.user = req.user;
+  res.send(req.session.passport.user);
+});
 
 app.get('/login/facebook/callback',
   passport.authenticate('facebook', {
@@ -203,6 +194,35 @@ app.get('/login/facebook/callback',
     failureRedirect : '/more-info'
   })
 );
+
+app.get('/logout', function (req, res){
+  req.session.destroy();
+  res.redirect('/');
+});
+
+app.get('/api/events', function (req, res) {
+  api.getAllEvents( function (err, events) {
+    res.send(events);
+  });
+});
+
+app.get('/api/events/:id', function (req, res) {
+  api.getEventById( req.params.id, function (err, event) {
+    res.send(event);
+  });
+});
+
+app.get('/api/users', function (req, res) {
+  api.getAllUsers( function (err, users) {
+    res.send(users);
+  });
+});
+
+app.get('/api/users/:id', function (req, res) {
+  api.getUserById(req.params.id, function (err, user) {
+    res.send(user);
+  });
+});
 
 // ---------------------------------------------------
 // Configure Moonboots to serve our client application
@@ -224,13 +244,10 @@ new Moonboots({
       fixPath('public/css/kendo.common.min.css')
     ],
     browserify: {
-      debug: false,
+      debug: true,
       transforms: ['browserify-handlebars']
     },
     beforeBuildCSS: function (done) {
-      // This re-builds css from stylus each time the app's main css file is
-      // requested. Which means you can seamlessly change stylus files and see
-      // new styles on refresh.
       if (config.isDev) {
         stylizer({
           infile: fixPath('public/css/app.styl'),
