@@ -2,39 +2,42 @@
 
   <div class="row">
     <div class="medium-12 column">
-      <h2>{{ model.artistName }} @ {{ model.venue.name }}</h2>
+      <h2>{{ model.title }}</h2>
     </div>
   </div>
 
-
   <div class="row" style="margin-top: 15px">
-    <div class="medium-6 small-12 column">
-      <img src="{{ model.artistImageUrl }}" />
+    <div class="medium-5 small-12 column">
+      <img src="{{ model.mainImage }}" />
     </div>
-
     <div class="medium-6 small-12 column">
       {{ model.readableDate }}
     </div>
-
-    <div class="button" data-hook="attend" id="attendButton">Attend</div>
-
-    <div class="medium-6 small-12 column">
+    <div class="medium-7 small-12 column">
       <h2>Artist Information</h2>
-      <b>Name:</b> {{ model.artistName }}  <br />
-      <b>Facebook:</b> {{ model.artistFacebookPageUrl }} <br />
-      <b>Website:</b> {{ model.artistWebsiteUrl }}  <br />
+      {{#each model.artists}}
+      <b>Name:</b> {{ name }}  <br />
+      <b>Facebook:</b> {{ facebook_page_url }} <br />
+      <b>Website:</b> {{ website }}  <br />
+      {{/each}}
     </div>
-
-    <div class="medium-6 small-12 column">
+    <div class="medium-7 small-12 column">
       <h2>Venue Information</h2>
       <b>Name:</b> {{ model.venue.name }}  <br />
       <b>City:</b> {{ model.venue.city }} <br />
       <b>Region:</b> {{ model.venue.region }}  <br />
     </div>
+  </div>
 
-    <div class="medium-6 small-12 column">
-      <a class="button" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>
-      <a class="button" href="{{ model._id }}/edit">Edit Event</a>
+   <div class="row">
+    <div class="medium-4 column">
+      <div class="button btn-block" data-hook="attend" id="attendButton">Attend</div>
+    </div>
+    <div class="medium-4 column">
+      <a class="button btn-block" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>
+    </div>
+    <div class="medium-4 column">
+      <a class="button btn-block" href="{{ model._id }}/edit">Edit Event</a>
     </div>
   </div>
 

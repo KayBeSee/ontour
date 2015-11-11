@@ -34,16 +34,10 @@ module.exports = PageView.extend({
       self.model = userModel;
       self.collection.add(userModel.events);
     });
-    // this.render();
   },
 
   render: function(){
     this.renderWithTemplate(this);
-    // this.renderCollection(
-    //   this.collection,
-    //   EventTableView,
-    //   this.queryByHook('eventsTable')
-    // );
   },
 
 });

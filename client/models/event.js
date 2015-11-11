@@ -32,28 +32,10 @@ module.exports = AmpersandModel.extend({
     }
   },
   derived: {
-    artistName: {
-      deps: ['artists'],
-      fn: function () {
-        return this.artists[0].name;
-      }
-    },
-    artistImageUrl: {
+    mainImage: {
       deps: ['artists'],
       fn: function () {
         return this.artists[0].image_url;
-      }
-    },
-    artistFacebookPageUrl: {
-      deps: ['artists'],
-      fn: function () {
-        return this.artists[0].facebook_page_url;
-      }
-    },
-    artistWebsiteUrl: {
-      deps: ['artists'],
-      fn: function () {
-        return this.artists[0].website;
       }
     },
     readableDate: {

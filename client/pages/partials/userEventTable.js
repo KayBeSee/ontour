@@ -1,5 +1,5 @@
 var PageView   = require('../base');           // grab base page view
-var EventView = require('../../pages/partials/event');  // grab event view
+var EventView = require('./event');  // grab event view
 
 module.exports = PageView.extend({
   pageTitle: 'Event Collection',

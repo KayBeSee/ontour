@@ -149,7 +149,7 @@ var api = require('./server/api');
 // // To add new artists
 //  'Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee', 'The Southern Belles', 'The Werks', 'Umphreys McGee'
 //                   'Adventure Club', 'Kaskade', 'Alabama Shakes', 'U2', 'Claude von Stroke', 'Feed Me', 'Madeon', 'Porter Robinson', 'Audien', 'Gramatik', 'Griz', 'Bassnectar'
-// var artistList = [ 'Phish', 'String Cheese Incident', 'Widespread Panic','Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee', 'The Southern Belles', 'Keller Williams'];
+// var artistList = [ 'Phish', 'String Cheese Incident', 'Widespread Panic','Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee', 'The Southern Belles', 'Keller Williams', 'STS9'];
 // artistList.forEach(function (current, index, array) {
 //   request('http://api.bandsintown.com/artists/' + current + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function(err, response, events) {
 //     var artistEvents = events;

@@ -8,14 +8,13 @@ module.exports = PageView.extend({
   initialize: function () {
     this.collection.fetch({
       success: function () {
-        this.render().kendoGrid();
+        this.render(); //kendoGrid();
       }.bind(this)
     });
   },
 
   render: function () {
     this.renderWithTemplate();
-    console.log(this.collection);
     this.renderCollection(
       this.collection,
       EventView,

@@ -38,6 +38,7 @@ var userSchema = new Schema({
       }
     }
   ],
+  eventIds: [ObjectId],
   signupProvider: String
   });
 

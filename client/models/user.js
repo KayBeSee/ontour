@@ -12,7 +12,8 @@ module.exports = AmpersandModel.extend({
     fbId: ['string'],
     fbUrl: ['string'],
     fb_access_token: ['string'],
-    events: ['array']
+    events: ['array'],
+    eventIds: ['array']
   },
   derived: {
     eventCount: {
