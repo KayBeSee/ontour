@@ -14,10 +14,11 @@ module.exports = View.extend({
       if (err) window.alert('couldn\'t find a event with id: ' + spec._id);
       self.model = model;
     });
-    this.listenToAndRun(this, 'render', this.detectAttending);
+    this.render().detectAttending();
   },
   render: function() {
     this.renderWithTemplate();
+    return this;
   },
   detectAttending: function() {
     if(window.me._id){
@@ -40,10 +41,7 @@ module.exports = View.extend({
     console.log('clicked notattend');
     var pos = window.me.events.indexOf(this.model);
     window.me.events.splice(pos, 1);
-    $('#attend-'+this.model._id).replaceWith('<div class="btn btn-danger btn-xs notAttend" id="attend-'+this.model._id+'">Not Attending</div>');
+    $('#attend-'+this.model._id).replaceWith('<div class="btn btn-danger btn-xs notAttend" id="attend-'+this.model._id+'">Attending</div>');
     window.me.save({events: window.me.events});
-  },
-  test: function() {
-    console.log('test');
   }
 });

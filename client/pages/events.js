@@ -12,8 +12,8 @@ module.exports = PageView.extend({
       }.bind(this)
     });
   },
-
   render: function () {
+    console.log('render');
     this.renderWithTemplate();
     this.renderCollection(
       this.collection,
