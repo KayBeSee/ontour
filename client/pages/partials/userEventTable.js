@@ -6,7 +6,7 @@ module.exports = PageView.extend({
   template: require('../../templates/pages/events.hbs'),
 
   initialize: function () {
-    this.render().kendoGrid();
+    this.render();
   },
 
   render: function () {

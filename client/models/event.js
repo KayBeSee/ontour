@@ -51,6 +51,18 @@ module.exports = AmpersandModel.extend({
         var date = new Date(this.datetime);
         return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
       }
-    }
+    },
+    userIsAttending: {
+      deps: ['_id'],
+      cache: false,
+      fn: function() {
+        if(window.me._id){
+          if(window.me.eventIds.indexOf(this._id) === -1){
+            return false;
+          }
+          else { return true; }
+        }
+      }
+    },
   }
 });
