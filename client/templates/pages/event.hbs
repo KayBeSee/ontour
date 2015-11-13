@@ -30,8 +30,19 @@
   </div>
 
    <div class="row">
+
+
+
+
+
+
+
     <div class="medium-4 column">
-      <div class="button btn-block" data-hook="attend" id="attendButton">Attend</div>
+    {{#if model.userIsAttending }}
+      <span class="btn-success btn-md btn-block attend" id="attend-{{model._id}}">Attending</span>
+    {{ else }}
+      <span class="btn-danger btn-md btn-block notAttend" id="attend-{{model._id}}">Attending</span>
+    {{/if}}
     </div>
     <div class="medium-4 column">
       <a class="button btn-block" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>

@@ -29,7 +29,16 @@ module.exports = AmpersandModel.extend({
       country: 'string',
       latitude: 'number',
       longitude: 'number',
-    }
+    },
+    comments: [{
+      message: 'string',
+      datetime: 'string',
+      author: {
+        _id: 'string',
+        name: 'string',
+        photo: 'string',
+      }
+    }]
   },
   derived: {
     mainImage: {
