@@ -212,6 +212,12 @@ app.get('/api/events/:id', function (req, res) {
   });
 });
 
+app.put('/api/events/:id', function (req, res) {
+  api.updateEventById( req.params.id, req.body, function (err, event) {
+    res.send(event);
+  });
+});
+
 app.get('/api/users', function (req, res) {
   api.getAllUsers( function (err, users) {
     res.send(users);

@@ -30,13 +30,6 @@
   </div>
 
    <div class="row">
-
-
-
-
-
-
-
     <div class="medium-4 column">
     {{#if model.userIsAttending }}
       <span class="btn-success btn-md btn-block attend" id="attend-{{model._id}}">Attending</span>
@@ -51,5 +44,6 @@
       <a class="button btn-block" href="{{ model._id }}/edit">Edit Event</a>
     </div>
   </div>
-
+  <div data-hook="comments"></div>
 </section>
+

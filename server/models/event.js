@@ -29,7 +29,18 @@ var eventSchema = new Schema({
     country: String,
     latitude: String,
     longitude: String
-  }
+  },
+  comments: [{
+      _id: String,
+      datetime: String,
+      message: String,
+      score: Number,
+      author: {
+        _id: ObjectId,
+        name: String,
+        photo: String,
+      }
+    }]
   });
 
 module.exports = mongoose.model('Event', eventSchema);

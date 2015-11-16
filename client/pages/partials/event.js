@@ -18,7 +18,6 @@ module.exports = View.extend({
   render: function() {
     this.renderWithTemplate();
     this.attendButton = this.query('#attend-'+self.model._id);
-    console.log(this.attendButton);
     return this;
   },
   attend: function() {

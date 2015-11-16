@@ -31,8 +31,10 @@ module.exports = AmpersandModel.extend({
       longitude: 'number',
     },
     comments: [{
-      message: 'string',
+      _id: 'string',
       datetime: 'string',
+      message: 'string',
+      score: 'number',
       author: {
         _id: 'string',
         name: 'string',
@@ -65,12 +67,10 @@ module.exports = AmpersandModel.extend({
       deps: ['_id'],
       cache: false,
       fn: function() {
-        if(window.me._id){
-          if(window.me.eventIds.indexOf(this._id) === -1){
+        if(window.me._id && window.me.eventIds.indexOf(this._id) === -1){
             return false;
-          }
-          else { return true; }
         }
+        else { return true; }
       }
     },
   }

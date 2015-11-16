@@ -49,6 +49,13 @@ exports.getById = function(id, done) {
   });
 }
 
+exports.updateById = function(id, updatedEvent, done) {
+  Event.findByIdAndUpdate(id, updatedEvent, function (err, event) {
+    if (err) return handleError(err);
+    done(null, event);
+  });
+}
+
 exports.getByBitId = function(id, done) {
   Event.findById({'bitId' : id }, function (err, event) {
     if (err) done(err, null);
