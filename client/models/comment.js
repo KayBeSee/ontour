@@ -12,7 +12,7 @@ module.exports = AmpersandModel.extend({
     author: {
       _id: 'string',
       name: 'string',
-      photo: 'string',
+      picture: 'string',
     }
   },
   derived: {

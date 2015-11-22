@@ -5,6 +5,7 @@ var EventModel = require('../models/event');
 var CommentsView = require('./partials/comments');
 var Collection = require('ampersand-collection');
 var CommentModel = require('../models/comment');
+var CommentForm = require('../forms/comment');
 
 
 module.exports = PageView.extend({
@@ -27,11 +28,23 @@ module.exports = PageView.extend({
           collection : this.collection
         });
       }
+    },
+    CommentForm: {
+      container: '[data-hook=comment-form]',
+      waitFor: this.model,
+      prepareView: function (el) {
+        return new CommentForm({
+          el: el,
+          model: new CommentModel(),
+          parent: this
+        });
+      }
     }
   },
 
   initialize: function (spec) {
     var self = this;
+    console.log('this', this);
     this.collection = new Collection([], {model: CommentModel});
     this.model = new EventModel();
     app.events.getOrFetch(spec.id, function (err, eventModel) {
@@ -39,7 +52,6 @@ module.exports = PageView.extend({
       self.model = eventModel;
       self.collection.add(eventModel.comments);
     });
-    console.log(self, this, this.model, this.collection);
   },
 
   render: function() {

@@ -1,4 +1,4 @@
-<tr>
+<tr {{#if model.userIsAttending }}class="bg-success"{{/if}}>
   <td>{{ model.sortableDate }}</td>
   <td>{{#each model.artists}} {{ name }}, {{/each}}</td>
   <td>{{ model.venue.city }}, {{ model.venue.region }}</td>

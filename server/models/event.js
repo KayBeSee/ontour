@@ -38,7 +38,7 @@ var eventSchema = new Schema({
       author: {
         _id: ObjectId,
         name: String,
-        photo: String,
+        picture: String,
       }
     }]
   });

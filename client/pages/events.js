@@ -13,7 +13,7 @@ module.exports = PageView.extend({
     });
   },
   render: function () {
-    console.log('render');
+    console.log('render', this.model);
     this.renderWithTemplate();
     this.renderCollection(
       this.collection,

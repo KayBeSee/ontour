@@ -1,13 +1,22 @@
 <div class="row">
   <div class="col-md-3">
-    {{ model.author._id }} <br />
-    {{ model.author.name }} <br />
-    {{ model.author.picture }} <br />
-    {{ model.score }} <br />
-    {{ model.datetime }} <br />
+    <div class="row">
+      <div class="col-md-3">
+        <img src="{{ model.author.picture }}" class="img-responsive" />
+      </div>
+      <div class="col-md-9">
+        <a href="/users/{{ model.author._id }}">{{ model.author.name }}</a>
+      </div>
+    </div>
   </div>
   <div class="col-md-9">
-    {{ model.message }}
+    <div class="row">
+      {{ model.message }}
+    </div>
+    <div class="row">
+      <small>Created on: {{ model.datetime }}, Score: {{ model.score }}.
+        <a data-hook="upvote">Upvote</a> - <a data-hook="downvote">Downvote</a></small>
+    </div>
   </div>
 
 </div>
