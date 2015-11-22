@@ -13,37 +13,22 @@ module.exports = View.extend({
     window.app.events.getOrFetch(spec.model._id, {all: true}, function (err, model) {
       if (err) window.alert('couldn\'t find a event with id: ' + spec._id);
       self.model = model;
+      self.render();
     });
-    this.listenToAndRun(this, 'render', this.detectAttending);
   },
   render: function() {
     this.renderWithTemplate();
-  },
-  detectAttending: function() {
-    if(window.me._id){
-      if(window.me.eventIds.indexOf(this.model._id) === -1){
-        $('#attend-'+this.model._id).replaceWith('<div class="btn btn-danger btn-xs attend" id="attend-'+this.model._id+'">Not Attending</div>');      }
-      else {
-        $('#attend-'+this.model._id).replaceWith('<div class="btn btn-success btn-xs notAttend" id="attend-'+this.model._id+'">Attending</div>');
-      }
-    }
-    else { $('#attendButton').remove(); }
+    return this;
   },
   attend: function() {
-    console.log('clicked attend');
-    window.me.events.push(this.model);
-    $('#attend-'+this.model._id).replaceWith('<div class="btn btn-success btn-xs attend" id="attend-'+this.model._id+'">Attending</div>');
-    window.me.save({events: window.me.events});
+    window.me.addEvent(this.model);
+    window.me.save(window.me);
+    this.render();
   },
 
   notAttend: function() {
-    console.log('clicked notattend');
-    var pos = window.me.events.indexOf(this.model);
-    window.me.events.splice(pos, 1);
-    $('#attend-'+this.model._id).replaceWith('<div class="btn btn-danger btn-xs notAttend" id="attend-'+this.model._id+'">Not Attending</div>');
-    window.me.save({events: window.me.events});
-  },
-  test: function() {
-    console.log('test');
+    window.me.removeEvent(this.model);
+    window.me.save(window.me);
+    this.render();
   }
 });

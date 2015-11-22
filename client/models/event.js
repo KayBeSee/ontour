@@ -29,7 +29,18 @@ module.exports = AmpersandModel.extend({
       country: 'string',
       latitude: 'number',
       longitude: 'number',
-    }
+    },
+    comments: [{
+      _id: 'string',
+      datetime: 'string',
+      message: 'string',
+      score: 'number',
+      author: {
+        _id: 'string',
+        name: 'string',
+        photo: 'string',
+      }
+    }]
   },
   derived: {
     mainImage: {
@@ -51,6 +62,16 @@ module.exports = AmpersandModel.extend({
         var date = new Date(this.datetime);
         return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
       }
-    }
+    },
+    userIsAttending: {
+      deps: ['_id'],
+      cache: false,
+      fn: function() {
+        if(window.me._id && window.me.eventIds.indexOf(this._id) === -1){
+            return false;
+        }
+        else { return true; }
+      }
+    },
   }
 });

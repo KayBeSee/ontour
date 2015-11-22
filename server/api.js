@@ -13,6 +13,10 @@ exports.getEventById = function (id, done) {
   EventController.getById(id, done);
 }
 
+exports.updateEventById = function (id, updatedEvent, done) {
+  EventController.updateById(id, updatedEvent, done);
+}
+
 exports.getEventByBitId = function (id, done) {
   EventController.getByBitId(id, done);
 }

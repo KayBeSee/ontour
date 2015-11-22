@@ -52,5 +52,8 @@
     },
     'model.on_sale_datetime': {
       hook: 'on_sale_datetime'
+    },
+    'model.comments': {
+      hook: 'comments'
     }
   };

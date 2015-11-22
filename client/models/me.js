@@ -13,7 +13,7 @@ module.exports = AmpersandModel.extend({
     fbUrl: ['string'],
     fb_access_token: ['string'],
     events: ['array'],
-    eventIds: ['array']
+    // eventIds: ['array']
   },
   derived: {
     eventCount: {
@@ -21,6 +21,26 @@ module.exports = AmpersandModel.extend({
       fn: function() {
         return this.events.length;
       }
+    },
+   eventIds: {
+      deps: ['events'],
+      fn: function() {
+        return this.events.map(function(event) {return event._id;});
+      }
     }
+  },
+  addEvent: function(model) {
+    this.events.push(model);
+    this.eventIds.push(model._id);
+  },
+  removeEvent: function(model){
+    var modelPos = this.events.indexOf(model);
+    console.log('modelPos', modelPos);
+    this.events.splice(modelPos, 1);
+    console.log('after this.events.splice', this.events);
+    var idPos = this.eventIds.indexOf(model._id);
+    console.log('idPos', idPos);
+    this.eventIds.splice(idPos, 1);
+    console.log('after this.eventIds.splice', this.eventIds);
   }
 });

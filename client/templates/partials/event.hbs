@@ -1,4 +1,4 @@
-<tr>
+<tr {{#if model.userIsAttending }}class="bg-success"{{/if}}>
   <td>{{ model.sortableDate }}</td>
   <td>{{#each model.artists}} {{ name }}, {{/each}}</td>
   <td>{{ model.venue.city }}, {{ model.venue.region }}</td>
@@ -6,6 +6,10 @@
   <td>
     <a class="btn-primary btn-xs" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>
     <a class="btn-primary btn-xs" href="/events/{{ model._id }}">Details</a>
-    <button class="btn-success btn-xs attend" id="attend-{{model._id}}">Attending</button>
+    {{#if model.userIsAttending }}
+    <span class="btn-success btn-xs attend" id="attend-{{model._id}}">Attending</span>
+    {{ else }}
+    <span class="btn-danger btn-xs notAttend" id="attend-{{model._id}}">Attending</span>
+    {{/if}}
   </td>
 </tr>

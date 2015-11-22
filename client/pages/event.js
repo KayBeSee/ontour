@@ -2,61 +2,85 @@
 var PageView = require('./base');
 var eventbindings = require('../bindings/_eventbindings');
 var EventModel = require('../models/event');
+var CommentsView = require('./partials/comments');
+var Collection = require('ampersand-collection');
+var CommentModel = require('../models/comment');
+var CommentForm = require('../forms/comment');
+
 
 module.exports = PageView.extend({
   pageTitle: 'view event',
   template: require('../templates/pages/event.hbs'),
   bindings: eventbindings,
   events: {
-    'click [data-hook=attend]': 'attend',
-    'click [data-hook=not-attend]': 'notAttend'
+    'click .attend': 'notAttend',
+    'click .notAttend': 'attend',
+  },
+
+  subviews: {
+    Comments: {
+      container: '[data-hook=comments]',
+      waitFor: this.model,
+      prepareView: function(el) {
+        return new CommentsView({
+          el         : el,
+          parent     : this,
+          collection : this.collection
+        });
+      }
+    },
+    CommentForm: {
+      container: '[data-hook=comment-form]',
+      waitFor: this.model,
+      prepareView: function (el) {
+        return new CommentForm({
+          el: el,
+          model: new CommentModel(),
+          parent: this
+        });
+      }
+    }
   },
 
   initialize: function (spec) {
     var self = this;
+    console.log('this', this);
+    this.collection = new Collection([], {model: CommentModel});
     this.model = new EventModel();
     app.events.getOrFetch(spec.id, function (err, eventModel) {
       if (err) alert('couldn\'t find a model with id: ' + spec.id);
       self.model = eventModel;
+      self.collection.add(eventModel.comments);
     });
-    this.on('rendered', this.detectAttending);
   },
 
   render: function() {
-    if(window.me._id){
-      this.renderWithTemplate(this).detectAttending();
-    } else {
-      this.renderWithTemplate(this);
-    }
+    this.renderWithTemplate();
     return this;
   },
 
-  detectAttending: function() {
-    if(window.me._id){
-      if(window.me.eventIds.indexOf(this.model._id) === -1){
-        $('#attendButton').replaceWith('<div class="button alert btn-block" data-hook="attend" id="attendButton">Not Attending</div>');
-      }
-      else {
-        $('#attendButton').replaceWith('<div class="button success btn-block" data-hook="attend" id="attendButton">Attending</div>');
-      }
-    }
-    else { $('#attendButton').remove(); }
-  },
-
   attend: function() {
-    window.me.events.push(this.model);
-    window.me.eventIds.push(this.model._id);
-    $('#attendButton').replaceWith('<div class="button success btn-block" data-hook="not-attend" id="attendButton">Attending</div>');
-    window.me.save({events: window.me.events});
+    this.model.comments.push({
+      _id: '1234',
+      datetime: 'date mon',
+      message: 'Mr. Palmer is concerned',
+      score: 0,
+      author: {
+        _id: window.me._id,
+        name: window.me.first_name,
+        photo: window.me.picture
+      }
+    });
+    this.model.save(this.model);
+    window.me.addEvent(this.model);
+    window.me.save(window.me);
+    this.render();
   },
 
   notAttend: function() {
-    var pos = window.me.events.indexOf(this.model);
-    window.me.events.splice(pos, 1);
-    pos = window.me.eventIds.indexOf(this.model._id);
-    window.me.eventIds.splice(pos, 1);
-    $('#attendButton').replaceWith('<div class="button alert btn-block" data-hook="attend" id="attendButton">Not Attending</div>');
-    window.me.save({events: window.me.events});
+    window.me.removeEvent(this.model);
+    window.me.save(window.me);
+    this.render();
   }
 
 });

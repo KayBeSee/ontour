@@ -4,4 +4,5 @@ var Event = require('./event');
 module.exports = Collection.extend({
   model: Event,
   url: '/api/events',
+  comparator: 'datetime'
 });
