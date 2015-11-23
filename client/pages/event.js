@@ -60,27 +60,13 @@ module.exports = PageView.extend({
   },
 
   attend: function() {
-    this.model.comments.push({
-      _id: '1234',
-      datetime: 'date mon',
-      message: 'Mr. Palmer is concerned',
-      score: 0,
-      author: {
-        _id: window.me._id,
-        name: window.me.first_name,
-        photo: window.me.picture
-      }
-    });
-    this.model.save(this.model);
     window.me.addEvent(this.model);
-    window.me.save(window.me);
-    this.render();
+    window.me.save();
   },
 
   notAttend: function() {
     window.me.removeEvent(this.model);
-    window.me.save(window.me);
-    this.render();
+    window.me.save();
   }
 
 });
