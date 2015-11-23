@@ -35,12 +35,8 @@ module.exports = AmpersandModel.extend({
   },
   removeEvent: function(model){
     var modelPos = this.events.indexOf(model);
-    console.log('modelPos', modelPos);
     this.events.splice(modelPos, 1);
-    console.log('after this.events.splice', this.events);
     var idPos = this.eventIds.indexOf(model._id);
-    console.log('idPos', idPos);
     this.eventIds.splice(idPos, 1);
-    console.log('after this.eventIds.splice', this.eventIds);
   }
 });
