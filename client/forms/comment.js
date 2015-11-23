@@ -14,24 +14,15 @@ module.exports = FormView.extend({
     this.model.author._id = window.me._id;
     this.model.author.name = window.me.first_name + ' ' + window.me.last_name;
     this.model.author.picture = window.me.picture;
-    this.parent.model.comments.push(this.model);
-    this.parent.model.save(this.parent.model.comments, {
-      wait: true,
-      error: function(err) {
-        console.log('error', err);
-      },
-      success: function (model) {
-        console.log(model, this.model.parent);
-        this.model.parent.render()
-      }
-    });
+    this.parent.collection.add(this.model);
+    this.parent.model.save();
   },
   fields: function () {
     return [
       new InputView({
           label: 'Message',
           name: 'message',
-          value: this.model || this.model.message || '',
+          value: this.model.message || '',
           required: true,
           placeholder: 'Enter Comment',
           parent: this
