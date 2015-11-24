@@ -1,13 +1,13 @@
 /*global me, app*/
 var Router         = require('ampersand-router');
 var HomePage       = require('./pages/home');
-var InfoPage       = require('./pages/info');
 var EventViewPage  = require('./pages/event');
 var EventsPage     = require('./pages/events');
 var PastEventsPage = require('./pages/past-events');
 var EventEditPage  = require('./pages/event-edit');
 var UserViewPage  = require('./pages/user');
 var UsersPage     = require('./pages/users');
+var NewArtistPage = require('./pages/addNewArtistEvents');
 
 
 module.exports = Router.extend({
@@ -22,8 +22,8 @@ module.exports = Router.extend({
     'events/:id/edit'     : 'eventEdit',
     'event/new'           : 'eventCreate',
     'events'              : 'events',
+    'newArtist'           : 'newArtist',
     'past-events'         : 'pastEvents',
-    'info'                : 'info',
     '(*path)'             : 'catchAll'
   },
 
@@ -70,6 +70,10 @@ module.exports = Router.extend({
     this.trigger('page', new EventEditPage());
   },
 
+  newArtist: function () {
+    this.trigger('page', new NewArtistPage());
+  },
+
   users: function () {
     this.trigger('page', new UsersPage({
       collection: app.users
@@ -79,12 +83,6 @@ module.exports = Router.extend({
   user: function (id) {
     this.trigger('page', new UserViewPage({
       id: id
-    }));
-  },
-
-  info: function () {
-    this.trigger('page', new InfoPage({
-      model: me
     }));
   },
 

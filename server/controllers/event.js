@@ -1,6 +1,7 @@
 var Event = require('../models/event.js');
+var request = require('request');
 
-exports.addNew = function(event, done) {
+var addNew = exports.addNew = function(event, done) {
   var newEvent = new Event({
     bitId: event.id,
     title: event.title,
@@ -46,6 +47,18 @@ exports.getById = function(id, done) {
   Event.findById({'_id' : id }, function (err, event) {
     if (err) return handleError(err);
     done(null, event);
+  });
+}
+
+exports.addByArtistName = function(artistName, done) {
+  request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
+    var artistEvents = events;
+    artistEvents = JSON.parse(artistEvents);
+    artistEvents.forEach( function (current, index, array) {
+      addNew(current, function (err, event) {
+        console.log('Added Event ' + event._id);
+      });
+    });
   });
 }
 
