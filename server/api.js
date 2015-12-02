@@ -21,6 +21,10 @@ exports.addEventsByArtistName = function (artistName, done) {
   EventController.addByArtistName(artistName, done);
 }
 
+exports.getEventsByArtistName = function (artistName, done) {
+  EventController.getByArtistName(artistName, done);
+}
+
 exports.getEventByBitId = function (id, done) {
   EventController.getByBitId(id, done);
 }

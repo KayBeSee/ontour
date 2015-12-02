@@ -1,17 +1,16 @@
 var FormView = require('ampersand-form-view');
 var InputView = require('ampersand-input-view');
-var AmpersandModel = require('ampersand-model');
+var AmpersandCollection = require('ampersand-rest-collection');
 
 module.exports = FormView.extend({
   submitCallback: function(obj){
-    console.log('obj', obj);
-    this.model.url = '/api/add/events/artist/' + obj.artistName;
-    this.model.save({
-      success: function(){
-        app.navigate('/events');
-      },
-      error: function() {
-
+    this.parent.collection.url = '/api/add/events/artist/' + obj.artistName;
+    this.parent.collection.fetch({
+      success: function(collection, response, options){
+        this.parent.collection.reset(collection.models);
+      }.bind(this),
+      error: function(err) {
+        console.log('shit', err);
       }
     });
   },

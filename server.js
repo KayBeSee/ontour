@@ -218,6 +218,12 @@ app.put('/api/events/:id', function (req, res) {
   });
 });
 
+app.get('/api/add/events/artist/:artistName', function (req, res) {
+  api.getEventsByArtistName( req.params.artistName, function (err, events) {
+    res.send(events);
+  });
+});
+
 app.post('/api/add/events/artist/:artistName', function (req, res) {
   api.addEventsByArtistName( req.params.artistName, function (err, events) {
     res.send(events);

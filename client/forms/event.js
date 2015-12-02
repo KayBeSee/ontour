@@ -8,17 +8,25 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Id',
                 name: 'id',
-                value: this.model || this.model.id || '',
+                value: this.model._id || '',
                 required: false,
                 placeholder: 'Id',
                 parent: this
             }),
             new InputView({
-                label: 'Url',
-                name: 'url',
-                value: this.model.url || '',
+                label: 'BandsInTown ID',
+                name: 'bitId',
+                value: this.model.bitId || '',
                 required: false,
-                placeholder: 'Url',
+                placeholder: 'BandsInTown ID',
+                parent: this
+            }),
+            new InputView({
+                label: 'Title',
+                name: 'title',
+                value: this.model.title || '',
+                required: false,
+                placeholder: 'Title',
                 parent: this
             }),
             new InputView({
@@ -38,19 +46,19 @@ module.exports = FormView.extend({
                 parent: this
             }),
             new InputView({
+                label: 'Ticket Type',
+                name: 'ticket_type',
+                value: this.model.ticket_type || '',
+                required: false,
+                placeholder: 'Ticket Type',
+                parent: this
+            }),
+            new InputView({
                 label: 'Ticket Status',
                 name: 'ticket_status',
                 value: this.model.ticket_status || '',
                 required: false,
                 placeholder: 'Ticket Status',
-                parent: this
-            }),
-            new InputView({
-                label: 'On Sale Datetime',
-                name: 'on_sale_datetime',
-                value: this.model.on_sale_datetime || '',
-                required: false,
-                placeholder: 'On Sale Datetime',
                 parent: this
             }),
             new InputView({
@@ -128,17 +136,25 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Artist Url',
                 name: 'artistUrl',
-                value: this.model.artists[0].url || '',
+                value: this.model.artists[0].website || '',
                 required: false,
                 placeholder: 'Artist Url',
                 parent: this
             }),
             new InputView({
-                label: 'Artist mbid',
-                name: 'artistMbid',
-                value: this.model.artists[0].mbid || '',
+                label: 'Artist Image',
+                name: 'artistImage',
+                value: this.model.artists[0].image_url || '',
                 required: false,
-                placeholder: 'Artist Mbid',
+                placeholder: 'Artist Image URL',
+                parent: this
+            }),
+            new InputView({
+                label: 'facebook_page_url',
+                name: 'facebook_page_url',
+                value: this.model.artists[0].facebook_page_url || '',
+                required: false,
+                placeholder: 'Facebook Page Url',
                 parent: this
             })
         ];

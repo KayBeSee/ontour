@@ -6,7 +6,33 @@
     </fieldset>
     <div class="buttons">
       <button type="submit" class="button small" data-hook="submit">Submit</button>
+      <button type="submit" class="button small pull-right" data-hook="saveEvents">Save Events</button>
     </div>
   </form>
+
+  <div id="event-table" class="event-table">
+    <table class="table table-striped" id="events">
+      <thead>
+        <tr>
+          <th data-field="dateTime" id="dateTime">
+            Date
+          </th>
+          <th data-field="status" id="status">
+            Artists
+          </th>
+          <th data-field="location" id="location">
+            Location
+          </th>
+          <th data-field="venue" id="venue">
+            Venue
+          </th>
+          <th>
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody data-hook="event-list"></tbody>
+    </table>
+  </div>
 
 </section>

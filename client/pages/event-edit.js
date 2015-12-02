@@ -11,7 +11,7 @@ module.exports = PageView.extend({
       app.events.getOrFetch(options.id, { all: true }, function (err, model) {
         if (err) alert('couldn\'t find a model with id: ' + options.id);
         this.model = model;
-        this.model.url = '/api/events/' + this.model.id;
+        this.model.url = '/api/events/' + model.id;
       }.bind(this));
     } else {
       this.model = new Event();
