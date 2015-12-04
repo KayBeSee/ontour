@@ -17,6 +17,7 @@ var passport         = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var session          = require('express-session');
 var RedisStore       = require('connect-redis')(session);
+var Redis            = require('redis');
 var User             = require('./server/models/user');
 
 process.config       = require('./config');
@@ -76,6 +77,14 @@ mongoose.connect(process.config.mongoUrl);
 // ---------------------------------------------------
 // Redis Session Store
 // ---------------------------------------------------
+var redisClient = Redis.createClient(process.config.redis.port, process.config.redis.host, {no_ready_check: true});
+redisClient.auth(process.config.redis.auth, function (err) {
+    if (err) console.log(err);
+});
+redisClient.on('connect', function() {
+    console.log('Connected to Redis');
+});
+
 app.use(session({
   key: process.config.key,
   secret: process.config.redis.secret,
@@ -83,10 +92,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   store: new RedisStore({
-    host: process.config.redis.host,
-    port: process.config.redis.port,
-    pass: process.config.redis.auth,
-    db: 4
+    client: redisClient
   })
 }));
 
@@ -213,13 +219,20 @@ app.get('/api/events/:id', function (req, res) {
 });
 
 app.put('/api/events/:id', function (req, res) {
+  console.log(req);
   api.updateEventById( req.params.id, req.body, function (err, event) {
     res.send(event);
   });
 });
 
-app.get('/api/add/events/artist/:artistName', function (req, res) {
-  api.getEventsByArtistName( req.params.artistName, function (err, events) {
+app.post('/logout', function (req, res){
+  req.session.destroy();
+  res.redirect('/');
+});
+
+app.post('/api/events/create', function (req, res) {
+  api.addNewEvent(req.body, function (err, events) {
+    if(err) console.log(err);
     res.send(events);
   });
 });
@@ -282,4 +295,4 @@ new Moonboots({
 
 
 // listen for incoming http requests on the port as specified in our config
-app.listen(config.http.port);
+app.listen(process.env.PORT || config.http.port);

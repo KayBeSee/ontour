@@ -15,7 +15,7 @@ module.exports = FormView.extend({
     this.model.author.name = window.me.first_name + ' ' + window.me.last_name;
     this.model.author.picture = window.me.picture;
     this.parent.collection.add(this.model);
-    this.parent.model.save();
+    this.parent.model.save({comments: this.parent.collection});
   },
   fields: function () {
     return [
