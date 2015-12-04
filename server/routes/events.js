@@ -15,12 +15,17 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/add/events/artist/:artistName', function (req, res) {
-    api.getEventsByArtistName( req.params.artistName, function (err, events) {
-      if(err) return console.log(err);
+  app.get('/api/events/artist/:artistName', function (req, res){
+    api.getEventsByArtistName(req.params.artistName, function (err, events) {
       res.send(events);
-    });
+    })
   });
+
+  app.get('/api/events/venue/:venueName', function (req, res){
+    api.getEventsByVenueName(req.params.venueName, function (err, events) {
+      res.send(events);
+    })
+  })
 
   // Put Routes
   app.put('/api/events/:id', function (req, res) {

@@ -16,12 +16,17 @@ exports.getById = function(id, done) {
   });
 }
 
-exports.getByArtistName = function(artistName, done) {
-  request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
-    if(err) return done(err, null);
-    var artistEvents = events;
-    artistEvents = JSON.parse(artistEvents);
-    done(null, artistEvents);
+exports.getAllByArtistName = function(artistName, done) {
+  Event.find({'artists.name': artistName}, function (err, events) {
+    if(err) return handleError(err);
+    done(null, events);
+  });
+}
+
+exports.getAllByVenueName = function(venueName, done) {
+  Event.find({'venue.name': venueName}, function (err, events) {
+    if(err) return handleError(err);
+    done(null, events);
   });
 }
 

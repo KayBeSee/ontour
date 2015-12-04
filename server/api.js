@@ -8,16 +8,16 @@ var UserController = require('./controllers/user.js');
     EventController.getAll(done);
   }
 
-  exports.getEventsByPage = function (page, done) {
-    EventController.getByPage(page, done);
-  }
-
   exports.getEventById = function (id, done) {
     EventController.getById(id, done);
   }
 
   exports.getEventsByArtistName = function (artistName, done) {
-    EventController.getByArtistName(artistName, done);
+    EventController.getAllByArtistName(artistName, done);
+  }
+
+   exports.getEventsByVenueName = function (venueName, done) {
+    EventController.getAllByVenueName(venueName, done);
   }
 
   exports.getEventByBitId = function (id, done) {
