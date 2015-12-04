@@ -60,12 +60,14 @@ module.exports = PageView.extend({
 
   attend: function() {
     window.me.addEvent(this.model);
-    window.me.save();
+    window.me.save(window.me);
+    this.render();
   },
 
   notAttend: function() {
     window.me.removeEvent(this.model);
-    window.me.save();
+    window.me.save(window.me);
+    this.render();
   }
 
 });
