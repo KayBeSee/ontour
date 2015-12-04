@@ -10,11 +10,6 @@ module.exports = View.extend({
   },
   initialize: function (spec) {
     var self = this;
-    window.app.events.getOrFetch(spec.model._id, {all: true}, function (err, model) {
-      if (err) window.alert('couldn\'t find a event with id: ' + spec._id);
-      self.model = model;
-      self.render();
-    });
   },
   render: function() {
     this.renderWithTemplate();

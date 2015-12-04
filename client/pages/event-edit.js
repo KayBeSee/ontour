@@ -11,7 +11,7 @@ module.exports = PageView.extend({
       app.events.getOrFetch(options.id, { all: true }, function (err, model) {
         if (err) alert('couldn\'t find a model with id: ' + options.id);
         this.model = model;
-        this.model.url = '/api/events/' + this.model.id;
+        this.model.url = '/api/events/' + model.id;
       }.bind(this));
     } else {
       this.model = new Event();
@@ -21,8 +21,9 @@ module.exports = PageView.extend({
   subviews: {
     form: {
       container: 'form',
-      waitFor: 'model',
+      waitFor: this.model,
       prepareView: function (el) {
+        console.log(this.model);
         return new EventForm({
           el: el,
           model: this.model,

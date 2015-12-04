@@ -10,7 +10,7 @@ module.exports = PageView.extend({
   initialize: function () {
     this.collection.fetch({
       success: function () {
-        this.render().kendoGrid();
+        this.render(); // .kendoGrid();
       }.bind(this)
     });
   },

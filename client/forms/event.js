@@ -5,20 +5,28 @@ var InputView = require('ampersand-input-view');
 module.exports = FormView.extend({
     fields: function () {
         return [
+            // new InputView({
+            //     label: 'Id',
+            //     name: 'id',
+            //     value: this.model._id || '',
+            //     required: false,
+            //     placeholder: 'Id',
+            //     parent: this
+            // }),
             new InputView({
-                label: 'Id',
-                name: 'id',
-                value: this.model || this.model.id || '',
+                label: 'BandsInTown ID',
+                name: 'bitId',
+                value: this.model.bitId || '',
                 required: false,
-                placeholder: 'Id',
+                placeholder: 'BandsInTown ID',
                 parent: this
             }),
             new InputView({
-                label: 'Url',
-                name: 'url',
-                value: this.model.url || '',
+                label: 'Title',
+                name: 'title',
+                value: this.model.title || '',
                 required: false,
-                placeholder: 'Url',
+                placeholder: 'Title',
                 parent: this
             }),
             new InputView({
@@ -38,6 +46,14 @@ module.exports = FormView.extend({
                 parent: this
             }),
             new InputView({
+                label: 'Ticket Type',
+                name: 'ticket_type',
+                value: this.model.ticket_type || '',
+                required: false,
+                placeholder: 'Ticket Type',
+                parent: this
+            }),
+            new InputView({
                 label: 'Ticket Status',
                 name: 'ticket_status',
                 value: this.model.ticket_status || '',
@@ -46,17 +62,9 @@ module.exports = FormView.extend({
                 parent: this
             }),
             new InputView({
-                label: 'On Sale Datetime',
-                name: 'on_sale_datetime',
-                value: this.model.on_sale_datetime || '',
-                required: false,
-                placeholder: 'On Sale Datetime',
-                parent: this
-            }),
-            new InputView({
                 label: 'Venue ID',
                 name: 'venueId',
-                value: this.model.venue.id || '',
+                value: this.model || this.model.venue.id || '',
                 required: false,
                 placeholder: 'Venue ID',
                 parent: this
@@ -64,7 +72,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Venue Url',
                 name: 'venueUrl',
-                value: this.model.venue.url || '',
+                value: this.model || this.model.venue.url || '',
                 required: false,
                 placeholder: 'Venue Url',
                 parent: this
@@ -72,7 +80,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Venue Name',
                 name: 'venueName',
-                value: this.model.venue.name || '',
+                value: this.model || this.model.venue.name || '',
                 required: false,
                 placeholder: 'Venue Name',
                 parent: this
@@ -80,7 +88,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Venue City',
                 name: 'venueCity',
-                value: this.model.venue.city || '',
+                value: this.model || this.model.venue.city || '',
                 required: false,
                 placeholder: 'Venue City',
                 parent: this
@@ -88,7 +96,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Venue Region',
                 name: 'venueRegion',
-                value: this.model.venue.region || '',
+                value: this.model || this.model.venue.region || '',
                 required: false,
                 placeholder: 'Venue Region',
                 parent: this
@@ -96,7 +104,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Venue Country',
                 name: 'venueCountry',
-                value: this.model.venue.country || '',
+                value: this.model || this.model.venue.country || '',
                 required: false,
                 placeholder: 'Venue Country',
                 parent: this
@@ -104,7 +112,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Venue Latitude',
                 name: 'venueLatitude',
-                value: this.model.venue.latitude || '',
+                value: this.model || this.model.venue.latitude || '',
                 required: false,
                 placeholder: 'Venue Latitude',
                 parent: this
@@ -112,7 +120,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Venue Longitude',
                 name: 'venueLongitude',
-                value: this.model.venue.longitude || '',
+                value: this.model || this.model.venue.longitude || '',
                 required: false,
                 placeholder: 'Venue Longitude',
                 parent: this
@@ -120,7 +128,7 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Artist Name',
                 name: 'artistName',
-                value: this.model.artists[0].name || '',
+                value: this.model || this.model.artists[0].name || '',
                 required: false,
                 placeholder: 'Artist Name',
                 parent: this
@@ -128,17 +136,25 @@ module.exports = FormView.extend({
             new InputView({
                 label: 'Artist Url',
                 name: 'artistUrl',
-                value: this.model.artists[0].url || '',
+                value: this.model || this.model.artists[0].website || '',
                 required: false,
                 placeholder: 'Artist Url',
                 parent: this
             }),
             new InputView({
-                label: 'Artist mbid',
-                name: 'artistMbid',
-                value: this.model.artists[0].mbid || '',
+                label: 'Artist Image',
+                name: 'artistImage',
+                value: this.model || this.model.artists[0].image_url || '',
                 required: false,
-                placeholder: 'Artist Mbid',
+                placeholder: 'Artist Image URL',
+                parent: this
+            }),
+            new InputView({
+                label: 'facebook_page_url',
+                name: 'facebook_page_url',
+                value: this.model || this.model.artists[0].facebook_page_url || '',
+                required: false,
+                placeholder: 'Facebook Page Url',
                 parent: this
             })
         ];

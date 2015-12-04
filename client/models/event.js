@@ -23,6 +23,7 @@ module.exports = AmpersandModel.extend({
       website: 'string'
     }],
     venue: {
+      id: 'string',
       name: 'string',
       city: 'string',
       region: 'string',

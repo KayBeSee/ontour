@@ -44,9 +44,8 @@ module.exports = PageView.extend({
 
   initialize: function (spec) {
     var self = this;
-    console.log('this', this);
-    this.collection = new Collection([], {model: CommentModel});
-    this.model = new EventModel();
+    self.collection = new Collection([], {model: CommentModel});
+    self.model = new EventModel();
     app.events.getOrFetch(spec.id, function (err, eventModel) {
       if (err) alert('couldn\'t find a model with id: ' + spec.id);
       self.model = eventModel;
@@ -61,12 +60,14 @@ module.exports = PageView.extend({
 
   attend: function() {
     window.me.addEvent(this.model);
-    window.me.save();
+    window.me.save(window.me);
+    this.render();
   },
 
   notAttend: function() {
     window.me.removeEvent(this.model);
-    window.me.save();
+    window.me.save(window.me);
+    this.render();
   }
 
 });

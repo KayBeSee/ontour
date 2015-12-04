@@ -1,8 +1,15 @@
 <section class="page home">
-  <div class="text-center">
+  <div class="row text-center">
     <h2>
       Let's get this show on the road.
     </h2>
+  </div>
+  <div class="row text-center">
+    {{#if model._id }}
+    Logged in as <a href="/users/{{ model._id }}">{{ model.first_name }} {{ model.last_name }}</a>
+    {{else}}
+    <a class="button" href="/login">login</a>
+    {{/if}}
   </div>
 
 </section>
