@@ -1,6 +1,39 @@
 var Event = require('../models/event.js');
 var request = require('request');
 
+// Get Commands
+exports.getAll = function(done) {
+  Event.find({ }, function (err, events) {
+    if (err) return handleError(err);
+    done(null, events);
+  });
+}
+
+exports.getById = function(id, done) {
+  Event.findById({'_id' : id }, function (err, event) {
+    if (err) return handleError(err);
+    done(null, event);
+  });
+}
+
+exports.getByArtistName = function(artistName, done) {
+  request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
+    if(err) return done(err, null);
+    var artistEvents = events;
+    artistEvents = JSON.parse(artistEvents);
+    done(null, artistEvents);
+  });
+}
+
+exports.getByBitId = function(id, done) {
+  Event.findById({'bitId' : id }, function (err, event) {
+    if (err) done(err, null);
+    done(null, event);
+  });
+}
+
+
+// Post Commands
 var addNew = exports.addNew = function(event, done) {
   var newEvent = new Event({
     bitId: event.id,
@@ -36,20 +69,6 @@ var addNew = exports.addNew = function(event, done) {
   });
 }
 
-exports.getAll = function(done) {
-  Event.find({ }, function (err, events) {
-    if (err) return handleError(err);
-    done(null, events);
-  });
-}
-
-exports.getById = function(id, done) {
-  Event.findById({'_id' : id }, function (err, event) {
-    if (err) return handleError(err);
-    done(null, event);
-  });
-}
-
 exports.addByArtistName = function(artistName, done) {
   request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
     var artistEvents = events;
@@ -62,15 +81,7 @@ exports.addByArtistName = function(artistName, done) {
   });
 }
 
-exports.getByArtistName = function(artistName, done) {
-  request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
-    if(err) return done(err, null);
-    var artistEvents = events;
-    artistEvents = JSON.parse(artistEvents);
-    done(null, artistEvents);
-  });
-}
-
+// Put Commands
 exports.updateById = function(id, updatedEvent, done) {
   Event.findByIdAndUpdate(id, updatedEvent, function (err, event) {
     if (err) return handleError(err);
@@ -78,16 +89,10 @@ exports.updateById = function(id, updatedEvent, done) {
   });
 }
 
-exports.getByBitId = function(id, done) {
-  Event.findById({'bitId' : id }, function (err, event) {
-    if (err) done(err, null);
+// Delete Commands
+exports.deleteById = function (id, done){
+  Event.findByIdAndRemove(id, function(err, event){
+    if (err) return handleError(err);
     done(null, event);
-  });
-}
-
-exports.addVenueToEvent = function (eventId, venue) {
-  // TODO: Add venueId to venue array in Event object.
-}
-exports.removeVenueFromEvent = function (eventId, venueId) {
-  // TODO: Remove venueId to venue array in Event object.
+  })
 }
