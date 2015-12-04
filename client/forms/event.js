@@ -5,14 +5,14 @@ var InputView = require('ampersand-input-view');
 module.exports = FormView.extend({
     fields: function () {
         return [
-            new InputView({
-                label: 'Id',
-                name: 'id',
-                value: this.model._id || '',
-                required: false,
-                placeholder: 'Id',
-                parent: this
-            }),
+            // new InputView({
+            //     label: 'Id',
+            //     name: 'id',
+            //     value: this.model._id || '',
+            //     required: false,
+            //     placeholder: 'Id',
+            //     parent: this
+            // }),
             new InputView({
                 label: 'BandsInTown ID',
                 name: 'bitId',

@@ -72,7 +72,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-mongoose.connect(process.config.mongoUrl);
+mongoose.connect(process.config.mongoUrl, {user: process.config.mongoUser, pass: process.config.mongoPass});
 
 // ---------------------------------------------------
 // Redis Session Store
@@ -136,7 +136,7 @@ passport.use('facebook', new FacebookStrategy({
             newUser.first_name  = profile.name.givenName;
             newUser.last_name = profile.name.familyName;
             newUser.fbUrl = profile.profileUrl;
-            newUser.email = profile.emails[0].value;
+            // newUser.email = profile.emails[0].value;
             newUser.picture = profile.photos[0].value;
             newUser.signupProvider = profile.provider;
 
@@ -239,6 +239,16 @@ app.post('/api/events/create', function (req, res) {
 
 app.post('/api/add/events/artist/:artistName', function (req, res) {
   api.addEventsByArtistName( req.params.artistName, function (err, events) {
+    if(err) return console.log(err);
+    console.log(events);
+    res.send(events);
+  });
+});
+
+app.get('/api/add/events/artist/:artistName', function (req, res) {
+  api.getEventsByArtistName( req.params.artistName, function (err, events) {
+    if(err) return console.log(err);
+    console.log(events);
     res.send(events);
   });
 });

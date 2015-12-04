@@ -21,8 +21,9 @@ module.exports = PageView.extend({
   subviews: {
     form: {
       container: 'form',
-      waitFor: 'model',
+      waitFor: this.model,
       prepareView: function (el) {
+        console.log(this.model);
         return new EventForm({
           el: el,
           model: this.model,

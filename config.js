@@ -1,5 +1,7 @@
 module.exports = {
   mongoUrl:                 process.env.MONGO_URL || 'mongodb://localhost:27017/ontour',
+  mongoUser:                process.env.mongoUser,
+  mongoPass:                process.env.mongoPass,
   facebook_api_key:         '692945770843019',
   facebook_api_secret:      'b217798f8c49810c6b86cf4395d7b0d0',
   fb_callback_url:          '/login/facebook/callback',

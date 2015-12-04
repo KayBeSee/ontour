@@ -44,7 +44,7 @@ module.exports = PageView.extend({
   saveEvents: function() {
     console.log(this.collection);
     this.collection.create(this.collection);
-    app.navigate('events');
+    app.navigate('/');
   }
 
 });
