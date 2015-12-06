@@ -1,0 +1,19 @@
+<section class="page view-user">
+
+  <div class="row">
+    <div class="medium-1 column">
+      <img src="{{ model.picture }}" class="img-rounded img-responsive"/>
+    </div>
+    <div class="medium-11 column">
+      <h2><span>{{ model.first_name }}</span> <span>{{ model.last_name }}</span></h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="medium-12 column">
+      Event Count: {{ model.eventCount }}
+    </div>
+  </div>
+
+  <div data-hook="eventsTable"></div>
+
+</section>

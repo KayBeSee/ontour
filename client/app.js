@@ -6,11 +6,12 @@ var config = require('clientconfig');
 var Router = require('./router');
 var tracking = require('./helpers/metrics');
 var MainView = require('./views/main');
-var Me = require('./models/me');
-var Users = require('./models/users');
 var domReady = require('domready');
 
+var Me = require('./models/me');
+var Users = require('./models/users');
 var Events = require('./models/events');
+var Artists = require('./models/artists');
 
 module.exports = {
   // this is the the whole app initter
@@ -22,6 +23,7 @@ module.exports = {
     window.me = new Me();
     this.users = new Users();
     this.events = new Events();
+    this.artists = new Artists();
 
     // init our URL handlers and the history tracker
     this.router = new Router();

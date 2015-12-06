@@ -1,4 +1,4 @@
-// Event Model
+// Artist Model
 
 var mongoose = require('mongoose')
    ,Schema = mongoose.Schema
@@ -6,16 +6,13 @@ var mongoose = require('mongoose')
 
 var artistSchema = new Schema({
   id: ObjectId,
-  name: Number,
+  name: String,
   website: String,
-  facebook: Date,
+  facebook: String,
   twitter: String,
-  cashortrade: String,
-  events: String,
   location: String,
   bio: String,
   picture: String,
-  events: null
 });
 
 module.exports = mongoose.model('Artist', artistSchema);

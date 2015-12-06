@@ -23,7 +23,6 @@ var Redis            = require('redis');
 process.config       = require('./config');
 
 var app              = express();
-var routes           = require('./server/routes')(app);
 
 // a little helper for fixing paths for various environments
 var fixPath = function (pathString) {
@@ -43,7 +42,7 @@ if (config.isDev) {
 }
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // in order to test this with spacemonkey we need frames
@@ -165,6 +164,7 @@ app.get('/authenticate', function (req, res){
 });
 
 app.post('/authenticate', function (req, res){
+  console.log(req.body);
   api.updateUser(req.body, function (user) {
     if (user == null) return res.json('Error updating user ' + req.body._id);
     res.json(user);
@@ -189,6 +189,8 @@ app.get('/logout', function (req, res){
   req.session.destroy();
   res.redirect('/');
 });
+
+require('./server/routes')(app);
 
 // ---------------------------------------------------
 // Configure Moonboots to serve our client application
