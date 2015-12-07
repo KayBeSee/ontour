@@ -9,6 +9,10 @@
     </div>
   </div>
   <div class="row">
+    {{#unless model._id }}
+      Oops, it looks like we have no information on this artist.<br />
+      <a href="/artist/new">Add Info!</a>
+    {{/unless}}
     <div class="medium-12 column">
       {{ model.website }} <br />
       {{ model.facebook }} <br />

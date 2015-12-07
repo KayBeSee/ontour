@@ -29,8 +29,8 @@ module.exports = PageView.extend({
     var self = this;
     self.collection = new Collection([], {model: EventModel});
     self.model = new ArtistModel();
-    app.artists.getOrFetch(spec.id, function (err, artistModel) {
-      if (err) alert('couldn\'t find a model with id: ' + spec.id);
+    app.artists.getOrFetch(spec.artistName, function (err, artistModel) {
+      if (err) alert('couldn\'t find a model with name: ' + spec.artistName);
       self.model = artistModel;
       self.collection.url = '/api/events/artist/' + artistModel.name;
       self.collection.fetch();

@@ -40,33 +40,14 @@ exports.getByBitId = function(id, done) {
 
 // Post Commands
 var addNew = exports.addNew = function(event, done) {
+  console.log(event);
   var newEvent = new Event({
     bitId: event.id,
     title: event.title,
     datetime: event.datetime,
     ticket_url: event.ticket_url,
-    ticket_type: event.ticket_type,
-    ticket_status: event.ticket_status,
-    facebook_rsvp_url: event.facebook_rsvp_url,
-    venue: {
-      name: event.venue.name,
-      city: event.venue.city,
-      region: event.venue.region,
-      country: event.venue.country,
-      latitude: event.venue.latitude,
-      longitude: event.venue.longitude
-    }
-  });
-  event.artists.forEach(function (current, index, array){
-    newEvent.artists.push({
-      name: event.artists[index].name,
-      image_url: event.artists[index].image_url,
-      thumb_url: event.artists[index].thumb_url,
-      facebook_tour_dates_url: event.artists[index].facebook_tour_dates_url,
-      facebook_page_url: event.artists[index].facebook_page_url,
-      tracker_count: event.artists[index].tracker_count,
-      website: event.artists[index].website,
-    });
+    picture: event.picture,
+    artists: event.artists
   });
   newEvent.save( function (err, event) {
     if (err) done(err, null);

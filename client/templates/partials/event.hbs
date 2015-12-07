@@ -1,6 +1,6 @@
 <tr {{#if model.userIsAttending }}class="bg-success"{{/if}}>
   <td>{{ model.sortableDate }}</td>
-  <td>{{#each model.artists}} {{ name }}, {{/each}}</td>
+  <td>{{#each model.artists}} <a href="/artists/{{ this }}">{{this}}</a>, {{/each}}</td>
   <td>{{ model.venue.city }}, {{ model.venue.region }}</td>
   <td data-hook="venue_name">{{ model.venue.name }}</td>
   <td>

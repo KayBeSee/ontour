@@ -6,6 +6,9 @@ var Event     = require('../models/event');
 module.exports = PageView.extend({
   pageTitle: 'edit event',
   template: require('../templates/pages/event-edit.hbs'),
+  events: {
+    'focus #date' : 'kendoDatePicker'
+  },
   initialize: function (options) {
     if (options && options.id) {
       app.events.getOrFetch(options.id, { all: true }, function (err, model) {
@@ -17,6 +20,9 @@ module.exports = PageView.extend({
       this.model = new Event();
       this.model.url = '/api/events/create';
     }
+  },
+  kendoDatePicker: function(){
+    $('#date').kendoDatePicker();
   },
   subviews: {
     form: {

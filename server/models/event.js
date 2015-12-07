@@ -6,22 +6,11 @@ var mongoose = require('mongoose')
 
 var eventSchema = new Schema({
   id: ObjectId,
-  bitId: Number,
   title: String,
   datetime: Date,
   ticket_url: String,
-  ticket_type: String,
-  ticket_status: String,
-  facebook_rsvp_url: String,
-  artists: [{
-    name: String,
-    image_url: String,
-    thumb_url: String,
-    facebook_tour_dates_url: String, //BiT Page
-    facebook_page_url: String,
-    tracker_count: Number,
-    website: String
-  }],
+  picture: String,
+  artists: [String],
   venue: {
     name: String,
     city: String,

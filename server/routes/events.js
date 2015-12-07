@@ -30,7 +30,7 @@ module.exports = function(app) {
   // Put Routes
   app.put('/api/events/:id', function (req, res) {
     console.log(req);
-    EventController.updateById( req.params.id, req.body, function (err, event) {
+    EventController.updateById( req.body.id, req.body, function (err, event) {
       res.send(event);
     });
   });

@@ -25,6 +25,10 @@ module.exports = {
     this.events = new Events();
     this.artists = new Artists();
 
+    this.users.fetch();
+    this.events.fetch();
+    this.artists.fetch();
+
     // init our URL handlers and the history tracker
     this.router = new Router();
 

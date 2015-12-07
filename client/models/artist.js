@@ -2,9 +2,10 @@ var AmpersandModel = require('ampersand-model');
 
 
 module.exports = AmpersandModel.extend({
-  idAttribute: '_id',
+  idAttribute: 'name',
+  urlRoot: '/api/artists',
   props: {
-    _id: ['string'],
+    _id: 'string',
     name: ['string'],
     website: ['string'],
     facebook: ['string'],

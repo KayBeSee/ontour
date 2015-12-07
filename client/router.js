@@ -32,7 +32,7 @@ module.exports = Router.extend({
     'venue/:venueName'    : 'venue',
 
     'artists'             : 'artists',
-    'artists/:id'         : 'artist',
+    'artists/:artistName' : 'artist',
     'artist/new'          : 'artistCreate',
 
     '(*path)'             : 'catchAll'
@@ -109,9 +109,9 @@ module.exports = Router.extend({
     }));
   },
 
-  artist: function (id) {
+  artist: function (artistName) {
     this.trigger('page', new ArtistViewPage({
-      id: id
+      artistName: artistName
     }));
   },
 

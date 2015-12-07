@@ -23,7 +23,7 @@ module.exports = function(app) {
   });
 
   // Post Routes
-  app.post('/api/artists/create', function (req, res) {
+  app.post('/api/artists', function (req, res) {
     ArtistController.addNew(req.body, function (err, artists) {
       if(err) console.log(err);
       res.send(artists);

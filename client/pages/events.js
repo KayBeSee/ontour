@@ -8,7 +8,7 @@ module.exports = PageView.extend({
   initialize: function () {
     this.collection.fetch({
       success: function () {
-        this.render(); //.kendoGrid();
+        this.render(); // kendoGrid();
       }.bind(this)
     });
   },
@@ -20,9 +20,9 @@ module.exports = PageView.extend({
       EventView,
       this.queryByHook('event-list'),
       { parent: this,
-        filter: function(model){
-          return Date.now() <  Date.parse(model.datetime);
-        }
+        // filter: function(model){
+        //   return Date.now() <  Date.parse(model.datetime);
+        // }
       }
     );
     return this;

@@ -15,7 +15,6 @@ module.exports = PageView.extend({
       }.bind(this));
     } else {
       this.model = new Artist();
-      this.model.url = '/api/artists/create';
     }
   },
   subviews: {
