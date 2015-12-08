@@ -29,7 +29,7 @@
     'model.venue.url': {
       hook: 'venue_url'
     },
-    'model.venue.name': {
+    'model.venue': {
       hook: 'venue_name'
     },
     'model.venue.city': {

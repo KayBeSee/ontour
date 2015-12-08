@@ -6,31 +6,14 @@ module.exports = AmpersandModel.extend({
   idAttribute: '_id',
   props: {
     _id: 'string',
-    bitId: 'number',
     title: 'string',
-    datetime: 'string',
+    datetime: 'date',
     ticket_url: 'string',
-    ticket_type: 'string',
-    ticket_status: 'string',
-    facebook_rsvp_url: 'string',
-    artists: [{
-      name: 'string',
-      image_url: 'string',
-      thumb_url: 'string',
-      facebook_tour_dates_url: 'string',
-      facebook_page_url: 'string',
-      tracker_count: 'number',
-      website: 'string'
-    }],
-    venue: {
-      id: 'string',
-      name: 'string',
-      city: 'string',
-      region: 'string',
-      country: 'string',
-      latitude: 'number',
-      longitude: 'number',
-    },
+    picture: 'string',
+    artists: 'array',
+    venue: 'string',
+    city: 'string',
+    state: 'string',
     comments: [{
       _id: 'string',
       datetime: 'string',
@@ -69,7 +52,7 @@ module.exports = AmpersandModel.extend({
       cache: false,
       fn: function() {
         if(window.me._id && window.me.eventIds.indexOf(this._id) === -1){
-            return false;
+          return false;
         }
         else { return true; }
       }

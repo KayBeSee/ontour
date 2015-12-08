@@ -1,160 +1,81 @@
 var FormView = require('ampersand-form-view');
 var InputView = require('ampersand-input-view');
+var ArrayInput = require('ampersand-array-input-view');
 
 
 module.exports = FormView.extend({
     fields: function () {
         return [
-            // new InputView({
-            //     label: 'Id',
-            //     name: 'id',
-            //     value: this.model._id || '',
-            //     required: false,
-            //     placeholder: 'Id',
-            //     parent: this
-            // }),
-            new InputView({
-                label: 'BandsInTown ID',
-                name: 'bitId',
-                value: this.model.bitId || '',
-                required: false,
-                placeholder: 'BandsInTown ID',
-                parent: this
-            }),
             new InputView({
                 label: 'Title',
                 name: 'title',
-                value: this.model.title || '',
+                value: this.model && this.model.title,
                 required: false,
                 placeholder: 'Title',
                 parent: this
             }),
             new InputView({
-                label: 'Datetime',
+                label: 'Date',
                 name: 'datetime',
-                value: this.model.datetime || '',
+                value: this.model.datetime,
                 required: false,
-                placeholder: 'Datetime',
-                parent: this
+                placeholder: 'Date',
+                parent: this,
+                template: ['<label>',
+                              '<span data-hook="label"></span>',
+                              '<input class="form-input" id="date">',
+                              '<div data-hook="message-container" class="message message-below message-error">',
+                                  '<p data-hook="message-text"></p>',
+                              '</div>',
+                          '</label>'
+                      ].join('')
             }),
             new InputView({
                 label: 'Ticket Url',
                 name: 'ticket_url',
-                value: this.model.ticket_url || '',
+                value: this.model && this.model.ticket_url,
                 required: false,
                 placeholder: 'Ticket Url',
                 parent: this
             }),
             new InputView({
-                label: 'Ticket Type',
-                name: 'ticket_type',
-                value: this.model.ticket_type || '',
+                label: 'Picture',
+                name: 'picture',
+                value: this.model && this.model.picture,
                 required: false,
-                placeholder: 'Ticket Type',
+                placeholder: 'Picture',
                 parent: this
             }),
             new InputView({
-                label: 'Ticket Status',
-                name: 'ticket_status',
-                value: this.model.ticket_status || '',
-                required: false,
-                placeholder: 'Ticket Status',
-                parent: this
-            }),
-            new InputView({
-                label: 'Venue ID',
-                name: 'venueId',
-                value: this.model || this.model.venue.id || '',
-                required: false,
-                placeholder: 'Venue ID',
-                parent: this
-            }),
-            new InputView({
-                label: 'Venue Url',
-                name: 'venueUrl',
-                value: this.model || this.model.venue.url || '',
-                required: false,
-                placeholder: 'Venue Url',
-                parent: this
-            }),
-            new InputView({
-                label: 'Venue Name',
-                name: 'venueName',
-                value: this.model || this.model.venue.name || '',
+                label: 'Venue',
+                name: 'venue',
+                value: this.model && this.model.venue,
                 required: false,
                 placeholder: 'Venue Name',
                 parent: this
             }),
             new InputView({
-                label: 'Venue City',
-                name: 'venueCity',
-                value: this.model || this.model.venue.city || '',
+                label: 'City',
+                name: 'city',
+                value: this.model && this.model.city,
                 required: false,
                 placeholder: 'Venue City',
                 parent: this
             }),
             new InputView({
-                label: 'Venue Region',
-                name: 'venueRegion',
-                value: this.model || this.model.venue.region || '',
+                label: 'State',
+                name: 'state',
+                value: this.model && this.model.state,
                 required: false,
-                placeholder: 'Venue Region',
+                placeholder: 'Venue State',
                 parent: this
             }),
-            new InputView({
-                label: 'Venue Country',
-                name: 'venueCountry',
-                value: this.model || this.model.venue.country || '',
+            new ArrayInput({
+                label: 'Artists',
+                name: 'artists',
+                value: this.model && this.model.artists || [],
                 required: false,
-                placeholder: 'Venue Country',
-                parent: this
-            }),
-            new InputView({
-                label: 'Venue Latitude',
-                name: 'venueLatitude',
-                value: this.model || this.model.venue.latitude || '',
-                required: false,
-                placeholder: 'Venue Latitude',
-                parent: this
-            }),
-            new InputView({
-                label: 'Venue Longitude',
-                name: 'venueLongitude',
-                value: this.model || this.model.venue.longitude || '',
-                required: false,
-                placeholder: 'Venue Longitude',
-                parent: this
-            }),
-            new InputView({
-                label: 'Artist Name',
-                name: 'artistName',
-                value: this.model || this.model.artists[0].name || '',
-                required: false,
-                placeholder: 'Artist Name',
-                parent: this
-            }),
-            new InputView({
-                label: 'Artist Url',
-                name: 'artistUrl',
-                value: this.model || this.model.artists[0].website || '',
-                required: false,
-                placeholder: 'Artist Url',
-                parent: this
-            }),
-            new InputView({
-                label: 'Artist Image',
-                name: 'artistImage',
-                value: this.model || this.model.artists[0].image_url || '',
-                required: false,
-                placeholder: 'Artist Image URL',
-                parent: this
-            }),
-            new InputView({
-                label: 'facebook_page_url',
-                name: 'facebook_page_url',
-                value: this.model || this.model.artists[0].facebook_page_url || '',
-                required: false,
-                placeholder: 'Facebook Page Url',
+                placeholder: 'Artists',
                 parent: this
             })
         ];

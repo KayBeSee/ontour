@@ -1,11 +1,6 @@
 var User = require('../models/user.js');
 
-exports.addNew = function(user, done) {
-  var newUser = new User({
-    // TODO: Add function
-  });
-}
-
+// Get Commands
 exports.getAll = function(done) {
   User.find({ }, function (err, users) {
     if (err) return done(err, null);
@@ -27,6 +22,14 @@ exports.getByFbId = function(id, done) {
   });
 }
 
+// Post Commands
+exports.addNew = function(user, done) {
+  var newUser = new User({
+    // TODO: Add function
+  });
+}
+
+// Put Commands
 exports.update = function(user, done) {
   User.findByIdAndUpdate(user._id, user, done);
 }

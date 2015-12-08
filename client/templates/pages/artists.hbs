@@ -1,0 +1,32 @@
+<section class="page pageOne">
+  <div class="lists">
+  <div class="header-blocks artists-header row">
+    <div class="col-md-6">
+      <h2>Artists</h2>
+    </div>
+    <div class="col-md-6 text-right pull-right">
+      <a class="button" href="/artist/new">Add New Artist</a>
+    </div>
+  </div>
+  <div class="artist-table">
+    <table id="artists" class="table-striped">
+      <thead>
+        <tr>
+          <th data-field="image" id="artistImage">
+            Image
+          </th>
+          <th data-field="name" id="artistName">
+            Name
+          </th>
+          <th data-field="lastName" id="artistWebsite">
+            Website
+          </th>
+          <th>
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody data-hook="artist-list"></tbody>
+    </table>
+  </div>
+</section>

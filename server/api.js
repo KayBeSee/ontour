@@ -1,50 +1,63 @@
 var EventController = require('./controllers/event.js');
 var UserController = require('./controllers/user.js');
 
-exports.getAllEvents = function (done) {
-  EventController.getAll(done);
-}
 
-exports.getEventsByPage = function (page, done) {
-  EventController.getByPage(page, done);
-}
+// Event Commands
+  // Get
+  exports.getAllEvents = function (done) {
+    EventController.getAll(done);
+  }
 
-exports.getEventById = function (id, done) {
-  EventController.getById(id, done);
-}
+  exports.getEventById = function (id, done) {
+    EventController.getById(id, done);
+  }
 
-exports.updateEventById = function (id, event, done) {
-  EventController.updateById(id, event, done);
-}
+  exports.getEventsByArtistName = function (artistName, done) {
+    EventController.getAllByArtistName(artistName, done);
+  }
 
-exports.addEventsByArtistName = function (artistName, done) {
-  EventController.addByArtistName(artistName, done);
-}
+   exports.getEventsByVenueName = function (venueName, done) {
+    EventController.getAllByVenueName(venueName, done);
+  }
 
-exports.getEventsByArtistName = function (artistName, done) {
-  EventController.getByArtistName(artistName, done);
-}
+  exports.getEventByBitId = function (id, done) {
+    EventController.getByBitId(id, done);
+  }
 
-exports.getEventByBitId = function (id, done) {
-  EventController.getByBitId(id, done);
-}
+  // Put
+  exports.updateEventById = function (id, event, done) {
+    EventController.updateById(id, event, done);
+  }
 
-exports.addNewEvent = function (event, done) {
-  EventController.addNew(event, done);
-}
+  // Post
+  exports.addNewEvent = function (event, done) {
+    EventController.addNew(event, done);
+  }
 
-exports.getAllUsers = function (done) {
-  UserController.getAll(done);
-}
+  exports.addEventsByArtistName = function (artistName, done) {
+    EventController.addByArtistName(artistName, done);
+  }
 
-exports.getUserByFbId = function (id, done) {
-  UserController.getByFbId(id, done);
-}
+  // Delete
+  exports.deleteEventById = function (id, done) {
+    EventController.deleteById(id, done);
+  }
 
-exports.getUserById = function (id, done) {
-  UserController.getById(id, done);
-}
+// User Commands
+  // Get
+  exports.getAllUsers = function (done) {
+    UserController.getAll(done);
+  }
 
-exports.updateUser = function (user, done) {
-  UserController.update(user, done);
-}
+  exports.getUserByFbId = function (id, done) {
+    UserController.getByFbId(id, done);
+  }
+
+  exports.getUserById = function (id, done) {
+    UserController.getById(id, done);
+  }
+
+  // Put
+  exports.updateUser = function (user, done) {
+    UserController.update(user, done);
+  }

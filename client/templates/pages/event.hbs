@@ -8,7 +8,7 @@
 
   <div class="row" style="margin-top: 15px">
     <div class="medium-5 small-12 column">
-      <img src="{{ model.mainImage }}" />
+      <img src="{{ model.picture }}" />
     </div>
     <div class="medium-7 small-12 column">
       <div class="row">
@@ -33,18 +33,16 @@
       <div class="medium-12 small-12 column">
       <h2>Artist Information</h2>
         {{#each model.artists}}
-        <b>Name:</b> {{ name }}  <br />
-        <b>Facebook:</b> {{ facebook_page_url }} <br />
-        <b>Website:</b> {{ website }}  <br />
+        <b>Name:</b> <a href="/artists/{{ this }}">{{ this }}</a>  <br />
         {{/each}}
       </div>
     </div>
     <div class="row">
       <div class="medium-7 small-12 column">
         <h2>Venue Information</h2>
-        <b>Name:</b> {{ model.venue.name }}  <br />
-        <b>City:</b> {{ model.venue.city }} <br />
-        <b>Region:</b> {{ model.venue.region }}  <br />
+        <b>Name:</b> {{ model.venue }}  <br />
+        <b>City:</b> {{ model.city }} <br />
+        <b>Region:</b> {{ model.state }}  <br />
       </div>
     </div>
   </div>

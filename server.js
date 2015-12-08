@@ -13,12 +13,12 @@ var stylizer         = require('stylizer');
 
 var request          = require('request');
 var mongoose         = require('mongoose');
+var session          = require('express-session');
 var passport         = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var session          = require('express-session');
+var User             = require('./server/models/user');
 var RedisStore       = require('connect-redis')(session);
 var Redis            = require('redis');
-var User             = require('./server/models/user');
 
 process.config       = require('./config');
 
@@ -42,7 +42,7 @@ if (config.isDev) {
 }
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // in order to test this with spacemonkey we need frames
@@ -95,7 +95,6 @@ app.use(session({
     client: redisClient
   })
 }));
-
 
 // ---------------------------------------------------
 // Login Functionality
@@ -152,22 +151,6 @@ passport.use('facebook', new FacebookStrategy({
 
 var api = require('./server/api');
 
-// // To add new artists
-//  'Phish', 'String Cheese Incident', 'Widespread Panic', 'STS9', 'Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee', 'The Southern Belles', 'The Werks', 'Umphreys McGee'
-//                   'Adventure Club', 'Kaskade', 'Alabama Shakes', 'U2', 'Claude von Stroke', 'Feed Me', 'Madeon', 'Porter Robinson', 'Audien', 'Gramatik', 'Griz', 'Bassnectar'
-// var artistList = [ 'Phish', 'String Cheese Incident', 'Widespread Panic','Greensky Bluegrass', 'Yonder Mountain String Band', 'The Jauntee', 'The Southern Belles', 'Keller Williams', 'STS9'];
-// artistList.forEach(function (current, index, array) {
-//   request('http://api.bandsintown.com/artists/' + current + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function(err, response, events) {
-//     var artistEvents = events;
-//     artistEvents = JSON.parse(artistEvents);
-//     artistEvents.forEach( function (current, index, array) {
-//       api.addNewEvent(current, function (err, event) {
-//         console.log('Added Event ' + event._id);
-//       });
-//     });
-//   });
-// });
-
 app.get('/authenticate', function (req, res){
   if(req.session.passport.user) {
     api.getUserById(req.session.passport.user, function (err, user) {
@@ -181,6 +164,7 @@ app.get('/authenticate', function (req, res){
 });
 
 app.post('/authenticate', function (req, res){
+  console.log(req.body);
   api.updateUser(req.body, function (user) {
     if (user == null) return res.json('Error updating user ' + req.body._id);
     res.json(user);
@@ -206,64 +190,7 @@ app.get('/logout', function (req, res){
   res.redirect('/');
 });
 
-app.get('/api/events', function (req, res) {
-  api.getAllEvents( function (err, events) {
-    res.send(events);
-  });
-});
-
-app.get('/api/events/:id', function (req, res) {
-  api.getEventById( req.params.id, function (err, event) {
-    res.send(event);
-  });
-});
-
-app.put('/api/events/:id', function (req, res) {
-  console.log(req);
-  api.updateEventById( req.params.id, req.body, function (err, event) {
-    res.send(event);
-  });
-});
-
-app.post('/logout', function (req, res){
-  req.session.destroy();
-  res.redirect('/');
-});
-
-app.post('/api/events/create', function (req, res) {
-  api.addNewEvent(req.body, function (err, events) {
-    if(err) console.log(err);
-    res.send(events);
-  });
-});
-
-app.post('/api/add/events/artist/:artistName', function (req, res) {
-  api.addEventsByArtistName( req.params.artistName, function (err, events) {
-    if(err) return console.log(err);
-    console.log(events);
-    res.send(events);
-  });
-});
-
-app.get('/api/add/events/artist/:artistName', function (req, res) {
-  api.getEventsByArtistName( req.params.artistName, function (err, events) {
-    if(err) return console.log(err);
-    console.log(events);
-    res.send(events);
-  });
-});
-
-app.get('/api/users', function (req, res) {
-  api.getAllUsers( function (err, users) {
-    res.send(users);
-  });
-});
-
-app.get('/api/users/:id', function (req, res) {
-  api.getUserById(req.params.id, function (err, user) {
-    res.send(user);
-  });
-});
+require('./server/routes')(app);
 
 // ---------------------------------------------------
 // Configure Moonboots to serve our client application
