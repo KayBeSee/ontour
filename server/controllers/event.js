@@ -17,7 +17,7 @@ exports.getById = function(id, done) {
 }
 
 exports.getAllByArtistName = function(artistName, done) {
-  Event.find({'artists.name': artistName}, function (err, events) {
+  Event.find({'artists': artistName}, function (err, events) {
     if(err) return handleError(err);
     done(null, events);
   });
@@ -47,7 +47,10 @@ var addNew = exports.addNew = function(event, done) {
     datetime: event.datetime,
     ticket_url: event.ticket_url,
     picture: event.picture,
-    artists: event.artists
+    artists: event.artists,
+    venue: event.venue,
+    city: event.city,
+    state: event.state
   });
   newEvent.save( function (err, event) {
     if (err) done(err, null);

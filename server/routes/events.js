@@ -10,7 +10,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/events/:id', function (req, res) {
-    EventController.getById( req.params.id, function (err, event) {
+    EventController.getById( req.params._id, function (err, event) {
       res.send(event);
     });
   });
@@ -29,8 +29,7 @@ module.exports = function(app) {
 
   // Put Routes
   app.put('/api/events/:id', function (req, res) {
-    console.log(req);
-    EventController.updateById( req.body.id, req.body, function (err, event) {
+    EventController.updateById( req.body._id, req.body, function (err, event) {
       res.send(event);
     });
   });
@@ -52,7 +51,7 @@ module.exports = function(app) {
 
   // Delete Routes
   app.delete('/api/events/:id', function (req, res) {
-    EventController.deleteById( req.params.id, function (err, event) {
+    EventController.deleteById( req.params._id, function (err, event) {
       res.send(event);
     });
   });

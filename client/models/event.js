@@ -11,15 +11,9 @@ module.exports = AmpersandModel.extend({
     ticket_url: 'string',
     picture: 'string',
     artists: 'array',
-    venue: {
-      id: 'string',
-      name: 'string',
-      city: 'string',
-      region: 'string',
-      country: 'string',
-      latitude: 'number',
-      longitude: 'number',
-    },
+    venue: 'string',
+    city: 'string',
+    state: 'string',
     comments: [{
       _id: 'string',
       datetime: 'string',

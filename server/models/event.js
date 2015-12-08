@@ -11,14 +11,9 @@ var eventSchema = new Schema({
   ticket_url: String,
   picture: String,
   artists: [String],
-  venue: {
-    name: String,
-    city: String,
-    region: String,
-    country: String,
-    latitude: String,
-    longitude: String
-  },
+  venue: String,
+  city: String,
+  state: String,
   comments: [{
       _id: String,
       datetime: String,

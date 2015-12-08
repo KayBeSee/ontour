@@ -23,7 +23,7 @@ module.exports = function(app) {
   });
 
   // Post Routes
-  app.post('/api/artists', function (req, res) {
+  app.post('/api/artists/create', function (req, res) {
     ArtistController.addNew(req.body, function (err, artists) {
       if(err) console.log(err);
       res.send(artists);
@@ -32,7 +32,7 @@ module.exports = function(app) {
 
   // Delete Routes
   app.delete('/api/artists/:id', function (req, res) {
-    ArtistController.deleteById( req.params.id, function (err, event) {
+    ArtistController.deleteById( req.params._id, function (err, event) {
       res.send(event);
     });
   });

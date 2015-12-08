@@ -6,16 +6,12 @@ var Artist     = require('../models/artist');
 module.exports = PageView.extend({
   pageTitle: 'edit artist',
   template: require('../templates/pages/artist-edit.hbs'),
-  initialize: function (options) {
-    console.log('options', options);
-    app.artists.getOrFetch(options.artistName, { all: true }, function (err, model) {
-      if (err) alert('couldn\'t find a model with artistName: ' + options.id);
-      this.model = model;
-      this.model.url = '/api/artists/' + model._id;
-    }.bind(this));
+  initialize: function () {
+      this.model = new Artist();
+      this.model.url = '/api/artists/create';
   },
   subviews: {
-    EditArtist: {
+    AddArtist: {
       container: 'form',
       waitFor: this.model,
       prepareView: function (el) {

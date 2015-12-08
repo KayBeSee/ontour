@@ -46,6 +46,30 @@ module.exports = FormView.extend({
                 placeholder: 'Picture',
                 parent: this
             }),
+            new InputView({
+                label: 'Venue',
+                name: 'venue',
+                value: this.model && this.model.venue,
+                required: false,
+                placeholder: 'Venue Name',
+                parent: this
+            }),
+            new InputView({
+                label: 'City',
+                name: 'city',
+                value: this.model && this.model.city,
+                required: false,
+                placeholder: 'Venue City',
+                parent: this
+            }),
+            new InputView({
+                label: 'State',
+                name: 'state',
+                value: this.model && this.model.state,
+                required: false,
+                placeholder: 'Venue State',
+                parent: this
+            }),
             new ArrayInput({
                 label: 'Artists',
                 name: 'artists',

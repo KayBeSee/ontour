@@ -12,30 +12,32 @@ var VenueViewPage     = require('./pages/venue');
 var ArtistsPage       = require('./pages/artists');
 var ArtistViewPage    = require('./pages/artist');
 var ArtistEditPage    = require('./pages/artist-edit');
+var ArtistNewPage    = require('./pages/artist-new');
 
 module.exports = Router.extend({
   routes: {
-    ''                    : 'home',
-    'login'               : 'loginFacebook',
-    'logout'              : 'logoutFacebook',
-    'users'               : 'users',
-    'users/:id'           : 'user',
+    ''                          : 'home',
+    'login'                     : 'loginFacebook',
+    'logout'                    : 'logoutFacebook',
+    'users'                     : 'users',
+    'users/:id'                 : 'user',
 
-    'events'              : 'events',
-    'past-events'         : 'pastEvents',
-    'events/:id'          : 'eventById',
-    'events/:id/edit'     : 'eventEdit',
-    'event/new'           : 'eventCreate',
+    'events'                    : 'events',
+    'past-events'               : 'pastEvents',
+    'events/:id'                : 'eventById',
+    'events/:id/edit'           : 'eventEdit',
+    'event/new'                 : 'eventCreate',
 
-    'pullArtistEvents'    : 'pullArtistEvents',
+    'pullArtistEvents'          : 'pullArtistEvents',
 
-    'venue/:venueName'    : 'venue',
+    'venue/:venueName'          : 'venue',
 
-    'artists'             : 'artists',
-    'artists/:artistName' : 'artist',
-    'artist/new'          : 'artistCreate',
+    'artists'                   : 'artists',
+    'artists/:artistName/edit'  : 'artistEdit',
+    'artists/:artistName'       : 'artist',
+    'artist/new'                : 'artistCreate',
 
-    '(*path)'             : 'catchAll'
+    '(*path)'                   : 'catchAll'
   },
 
   // ------- ROUTE HANDLERS ---------
@@ -116,7 +118,13 @@ module.exports = Router.extend({
   },
 
   artistCreate: function () {
-    this.trigger('page', new ArtistEditPage());
+    this.trigger('page', new ArtistNewPage());
+  },
+
+  artistEdit: function (artistName) {
+    this.trigger('page', new ArtistEditPage({
+      artistName: artistName
+    }));
   },
 
   catchAll: function () {
