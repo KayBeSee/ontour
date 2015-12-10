@@ -1,19 +1,19 @@
 /* global app, $, alert */
 var PageView = require('./base');
-var userbindings = require('../bindings/_userbindings');
+var venuebindings = require('../bindings/_venuebindings');
 var EventTable = require('./partials/eventTable');
-var Collection = require('ampersand-collection');
+var Collection = require('ampersand-rest-collection');
 var EventModel = require('../models/event');
-var UserModel = require('../models/user');
+var VenueModel = require('../models/venue');
 
 
 module.exports = PageView.extend({
-  pageTitle: 'view user',
-  template: require('../templates/pages/user.hbs'),
-  bindings: userbindings,
+  pageTitle: 'view venue',
+  template: require('../templates/pages/venue.hbs'),
+  bindings: venuebindings,
 
   subviews: {
-    EventTable: {
+    VenueEventTable: {
       container: '[data-hook=eventsTable]',
       prepareView: function(el) {
         return new EventTable({
@@ -27,17 +27,18 @@ module.exports = PageView.extend({
 
   initialize: function (spec) {
     var self = this;
-    this.collection = new Collection([], {model: EventModel});
-    this.model = new UserModel();
-    app.users.getOrFetch(spec.id, function (err, userModel) {
-      if (err) alert('couldn\'t find a model with id: ' + spec.id);
-      self.model = userModel;
-      self.collection.add(userModel.events);
+    self.collection = new Collection([], {model: EventModel});
+    self.model = new VenueModel();
+    app.venues.getOrFetch(spec.venueName, function (err, venueModel) {
+      if (err) alert('couldn\'t find a model with name: ' + spec.venueName);
+      self.model = venueModel;
+      self.collection.url = '/api/events/venue/' + venueModel.name;
+      self.collection.fetch();
     });
   },
 
   render: function(){
-    this.renderWithTemplate(this);
-  },
-
+    this.renderWithTemplate();
+    return this;
+  }
 });

@@ -8,7 +8,7 @@ module.exports = PageView.extend({
   template: require('../templates/pages/event-edit.hbs'),
   events: {
     'focus #date' : 'kendoDatePicker',
-    'click [data-hook=eventDelete]': 'deleteEvent'
+    'click [data-hook=delete]': 'deleteEvent'
   },
   initialize: function (options) {
     if (options && options.id) {

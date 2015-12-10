@@ -27,6 +27,13 @@ module.exports = function(app) {
     })
   });
 
+   app.get('/api/add/events/artist/:artistName', function (req, res) {
+    EventController.getByArtistName( req.params.artistName, function (err, events) {
+      if(err) return console.log(err);
+      res.send(events);
+    });
+  });
+
   // Put Routes
   app.put('/api/events/:id', function (req, res) {
     EventController.updateById( req.body._id, req.body, function (err, event) {

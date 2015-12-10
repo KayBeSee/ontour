@@ -40,6 +40,5 @@ module.exports = PageView.extend({
   render: function(){
     this.renderWithTemplate();
     return this;
-  },
-
+  }
 });

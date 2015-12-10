@@ -9,9 +9,9 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/venues/:id', function (req, res) {
-    VenueController.getById( req.params.id, function (err, venue) {
-      res.send(venue);
+  app.get('/api/venue/:name', function (req, res) {
+    VenueController.getByName( req.params.name, function (err, artist) {
+      res.send(artist);
     });
   });
 

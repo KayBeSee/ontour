@@ -8,11 +8,14 @@ var EventEditPage     = require('./pages/event-edit');
 var UserViewPage      = require('./pages/user');
 var UsersPage         = require('./pages/users');
 var NewArtistPage     = require('./pages/addNewArtistEvents');
-var VenueViewPage     = require('./pages/venue');
 var ArtistsPage       = require('./pages/artists');
 var ArtistViewPage    = require('./pages/artist');
 var ArtistEditPage    = require('./pages/artist-edit');
-var ArtistNewPage    = require('./pages/artist-new');
+var ArtistNewPage     = require('./pages/venue-new');
+var VenuesPage        = require('./pages/venues');
+var VenueViewPage     = require('./pages/venue');
+var VenueEditPage     = require('./pages/venue-edit');
+var VenueNewPage      = require('./pages/venue-new');
 
 module.exports = Router.extend({
   routes: {
@@ -30,12 +33,15 @@ module.exports = Router.extend({
 
     'pullArtistEvents'          : 'pullArtistEvents',
 
-    'venue/:venueName'          : 'venue',
-
     'artists'                   : 'artists',
     'artists/:artistName/edit'  : 'artistEdit',
     'artists/:artistName'       : 'artist',
     'artist/new'                : 'artistCreate',
+
+    'venues'                    : 'venues',
+    'venues/:venueName/edit'    : 'venueEdit',
+    'venues/:venueName'         : 'venue',
+    'venue/new'                 : 'venueCreate',
 
     '(*path)'                   : 'catchAll'
   },
@@ -99,12 +105,6 @@ module.exports = Router.extend({
     }));
   },
 
-  venue: function (venueName) {
-    this.trigger('page', new VenueViewPage({
-      venueName: venueName
-    }));
-  },
-
   artists: function () {
     this.trigger('page', new ArtistsPage({
       collection: app.artists
@@ -124,6 +124,28 @@ module.exports = Router.extend({
   artistEdit: function (artistName) {
     this.trigger('page', new ArtistEditPage({
       artistName: artistName
+    }));
+  },
+
+  venues: function () {
+    this.trigger('page', new VenuesPage({
+      collection: app.venues
+    }));
+  },
+
+  venue: function (venueName) {
+    this.trigger('page', new VenueViewPage({
+      venueName: venueName
+    }));
+  },
+
+  venueCreate: function () {
+    this.trigger('page', new VenueNewPage());
+  },
+
+  venueEdit: function (venueName) {
+    this.trigger('page', new VenueEditPage({
+      venueName: venueName
     }));
   },
 

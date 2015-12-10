@@ -1,21 +1,21 @@
 /* global app, alert */
 var PageView = require('./base');
-var ArtistForm = require('../forms/artist');
-var Artist     = require('../models/artist');
+var VenueForm = require('../forms/venue');
+var Venue     = require('../models/venue');
 
 module.exports = PageView.extend({
-  pageTitle: 'edit artist',
-  template: require('../templates/pages/artist-edit.hbs'),
+  pageTitle: 'edit venue',
+  template: require('../templates/pages/venue-edit.hbs'),
   initialize: function () {
-      this.model = new Artist();
-      this.model.url = '/api/artists/create';
+      this.model = new Venue();
+      this.model.url = '/api/venues/create';
   },
   subviews: {
-    AddArtist: {
+    AddVenue: {
       container: 'form',
       waitFor: this.model,
       prepareView: function (el) {
-        return new ArtistForm({
+        return new VenueForm({
           el: el,
           model: this.model,
           parent: this,
@@ -26,7 +26,7 @@ module.exports = PageView.extend({
                 console.log('error', err);
               },
               success: function () {
-                app.navigate('pullArtistEvents');
+                app.navigate('venues');
               }
             });
           }

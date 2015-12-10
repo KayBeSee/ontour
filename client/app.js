@@ -12,6 +12,7 @@ var Me = require('./models/me');
 var Users = require('./models/users');
 var Events = require('./models/events');
 var Artists = require('./models/artists');
+var Venues = require('./models/venues');
 
 module.exports = {
   // this is the the whole app initter
@@ -24,10 +25,12 @@ module.exports = {
     this.users = new Users();
     this.events = new Events();
     this.artists = new Artists();
+    this.venues = new Venues();
 
     this.users.fetch();
     this.events.fetch();
     this.artists.fetch();
+    this.venues.fetch();
 
     // init our URL handlers and the history tracker
     this.router = new Router();

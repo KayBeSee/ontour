@@ -24,7 +24,7 @@ exports.getAllByArtistName = function(artistName, done) {
 }
 
 exports.getAllByVenueName = function(venueName, done) {
-  Event.find({'venue.name': venueName}, function (err, events) {
+  Event.find({'venue': venueName}, function (err, events) {
     if(err) return handleError(err);
     done(null, events);
   });
@@ -37,10 +37,27 @@ exports.getByBitId = function(id, done) {
   });
 }
 
+exports.getByArtistName = function(artistName, done) {
+  request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
+    if(err) return done(err, null);
+    var artistEvents = JSON.parse(events);
+    artistEvents.forEach(function (current, index, array) {
+      current.city = current.venue.city;
+      current.state = current.venue.region
+      current.venue = current.venue.name;
+      var artistsArray = [];
+      current.artists.forEach(function (current, index, array){
+        artistsArray.push(current.name);
+      });
+      current.artists = artistsArray;
+    });
+    done(null, artistEvents);
+  });
+}
+
 
 // Post Commands
 var addNew = exports.addNew = function(event, done) {
-  console.log(event);
   var newEvent = new Event({
     bitId: event.id,
     title: event.title,
@@ -60,10 +77,19 @@ var addNew = exports.addNew = function(event, done) {
 
 exports.addByArtistName = function(artistName, done) {
   request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
-    var artistEvents = events;
-    artistEvents = JSON.parse(artistEvents);
-    artistEvents.forEach( function (current, index, array) {
+    var artistEvents = JSON.parse(events);
+    artistEvents.forEach(function (current, index, array) {
+      current.city = current.venue.city;
+      current.state = current.venue.region
+      current.venue = current.venue.name;
+      current.picture = current.artists[0].image_url;
+      var artistsArray = [];
+      current.artists.forEach(function (current, index, array){
+        artistsArray.push(current.name);
+      });
+      current.artists = artistsArray;
       addNew(current, function (err, event) {
+        console.log(event);
         console.log('Added Event ' + event._id);
       });
     });

@@ -13,13 +13,18 @@ module.exports = AmpersandModel.extend({
     fbUrl: ['string'],
     fb_access_token: ['string'],
     events: ['array'],
-    eventIds: ['array']
   },
   derived: {
     eventCount: {
       deps: ['events'],
       fn: function() {
         return this.events.length;
+      }
+    },
+    eventIds: {
+      deps: ['events'],
+      fn: function() {
+        return this.events.map(function(event) {return event._id;});
       }
     }
   }

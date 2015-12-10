@@ -14,31 +14,17 @@ var userSchema = new Schema({
   fbId: String,
   fbUrl: String,
   fb_access_token: String,
-  events: [
-    {
-      id: ObjectId,
-      bitId: Number,
-      title: String,
-      datetime: Date,
-      ticket_url: String,
-      facebook_rsvp_url: String,
-      artists: [{
-        name: String,
-        image_url: String,
-        thumb_url: String,
-        website: String
-      }],
-      venue: {
-        name: String,
-        city: String,
-        region: String,
-        country: String,
-        latitude: String,
-        longitude: String
-      }
-    }
-  ],
-  eventIds: [ObjectId],
+  events: [{
+    id: ObjectId,
+    title: String,
+    datetime: Date,
+    ticket_url: String,
+    picture: String,
+    artists: [String],
+    venue: String,
+    city: String,
+    state: String
+  }],
   signupProvider: String
   });
 

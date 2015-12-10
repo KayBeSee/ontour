@@ -9,9 +9,9 @@ exports.getAll = function(done) {
   });
 }
 
-exports.getById = function(id, done) {
-  Venue.findById({'_id' : id }, function (err, venue) {
-    if (err) return handleError(err);
+exports.getByName = function(name, done) {
+  Venue.find({'name' : name }, function (err, venue) {
+    if (err) done(err, null);
     done(null, venue);
   });
 }
@@ -37,7 +37,7 @@ var addNew = exports.addNew = function(venue, done) {
 // Put Commands
 exports.updateById = function(id, updatedVenue, done) {
   Venue.findByIdAndUpdate(id, updatedVenue, function (err, venue) {
-    if (err) return handleError(err);
+    if (err) done(err, null);
     done(null, venue);
   });
 }

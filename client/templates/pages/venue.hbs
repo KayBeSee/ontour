@@ -4,13 +4,23 @@
     <div class="medium-1 column">
       <img src="{{ model.picture }}" class="img-rounded img-responsive"/>
     </div>
-    <div class="medium-11 column">
-      <h2><span>{{ model.first_name }}</span> <span>{{ model.last_name }}</span></h2>
+    <div class="medium-9 column">
+      <h2><span>{{ model.name }}</span></h2>
+    </div>
+    <div class="col-md-2 text-right pull-right">
+      <a class="button" href="/venues/{{model.name}}/edit">Edit Venue</a>
     </div>
   </div>
   <div class="row">
+    {{#unless model._id }}
+      Oops, it looks like we have no information on this venue.<br />
+      <a href="/venue/new">Add Info!</a>
+    {{/unless}}
     <div class="medium-12 column">
-      Event Count: {{ model.eventCount }}
+      {{ model.address }} <br />
+      {{ model.city }}, {{ model.state }} {{model.zipcode}}<br />
+      {{ model.formattedPhone }} <br />
+      {{ model.bio }}
     </div>
   </div>
 

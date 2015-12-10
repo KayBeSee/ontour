@@ -2,7 +2,10 @@
   <td>{{ model.sortableDate }}</td>
   <td>{{#each model.artists}} <a href="/artists/{{ this }}">{{this}}</a>, {{/each}}</td>
   <td>{{ model.city }}, {{ model.state }}</td>
-  <td data-hook="venue_name">{{ model.venue }}</td>
+  <td data-hook="venue_name">{{#each model.venue}}
+    <a href="/venues/{{ model.venue }}">{{ model.venue }}</a>,
+    {{/each}}
+  </td>
   <td>
     <a class="btn-primary btn-xs" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>
     <a class="btn-primary btn-xs" href="/events/{{ model._id }}">Details</a>
