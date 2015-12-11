@@ -12,13 +12,5 @@ module.exports = AmpersandModel.extend({
     zipcode: 'string',
     phone: 'string',
     picture: 'string'
-  },
-  derived: {
-    formattedPhone: {
-      deps: ['phone'],
-      fn: function() {
-        return this.phone.replace((/(\d\d\d)(\d\d\d)(\d\d\d\d)/, '$1-$2-$3'));
-      }
-    }
   }
 });
