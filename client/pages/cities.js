@@ -1,11 +1,11 @@
 var PageView   = require('./base');           // grab base page view
-var VenueView = require('../pages/partials/venue');  // grab user view
+var CityView = require('../pages/partials/city');  // grab user view
 process.config = require('../../config');
 
 
 module.exports = PageView.extend({
   pageTitle: 'Venue Collection',
-  template: require('../templates/pages/venues.hbs'),
+  template: require('../templates/pages/cities.hbs'),
 
   initialize: function () {
     this.collection.fetch({
@@ -19,14 +19,14 @@ module.exports = PageView.extend({
     this.renderWithTemplate();
     this.renderCollection(
       this.collection,
-      VenueView,
-      this.queryByHook('venue-list')
+      CityView,
+      this.queryByHook('city-list')
     );
     return this;
   },
 
   kendoGrid: function () {
-    $('#venues').kendoGrid({
+    $('#cities').kendoGrid({
       dataSource: {
         sort: {
             field: "name",

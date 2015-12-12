@@ -4,28 +4,28 @@ var request = require('request');
 // Get Commands
 exports.getAll = function(done) {
   Event.find({ }, function (err, events) {
-    if (err) return handleError(err);
+    if (err) return done(err, null);
     done(null, events);
   });
 }
 
 exports.getById = function(id, done) {
   Event.findById({'_id' : id }, function (err, event) {
-    if (err) return handleError(err);
+    if (err) return done(err, null);
     done(null, event);
   });
 }
 
 exports.getAllByArtistName = function(artistName, done) {
   Event.find({'artists': artistName}, function (err, events) {
-    if(err) return handleError(err);
+    if(err) return done(err, null);
     done(null, events);
   });
 }
 
 exports.getAllByVenueName = function(venueName, done) {
   Event.find({'venue': venueName}, function (err, events) {
-    if(err) return handleError(err);
+    if(err) return done(err, null);
     done(null, events);
   });
 }
@@ -99,7 +99,7 @@ exports.addByArtistName = function(artistName, done) {
 // Put Commands
 exports.updateById = function(id, updatedEvent, done) {
   Event.findByIdAndUpdate(id, updatedEvent, function (err, event) {
-    if (err) return handleError(err);
+    if (err) return done(err, null);
     done(null, event);
   });
 }
@@ -107,7 +107,7 @@ exports.updateById = function(id, updatedEvent, done) {
 // Delete Commands
 exports.deleteById = function (id, done){
   Event.findByIdAndRemove(id, function(err, event){
-    if (err) return handleError(err);
+    if (err) return done(err, null);
     done(null, event);
   })
 }

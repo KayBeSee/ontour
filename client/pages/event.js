@@ -53,10 +53,10 @@ module.exports = PageView.extend({
     });
   },
 
-  render: function() {
-    this.renderWithTemplate();
-    return this;
-  },
+  // render: function() {
+  //   this.renderWithTemplate();
+  //   return this;
+  // },
 
   attend: function() {
     window.me.addEvent(this.model);

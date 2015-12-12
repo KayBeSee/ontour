@@ -13,6 +13,7 @@ var Users = require('./models/users');
 var Events = require('./models/events');
 var Artists = require('./models/artists');
 var Venues = require('./models/venues');
+var Cities = require('./models/cities');
 
 module.exports = {
   // this is the the whole app initter
@@ -26,6 +27,7 @@ module.exports = {
     this.events = new Events();
     this.artists = new Artists();
     this.venues = new Venues();
+    this.cities = new Cities();
 
     this.users.fetch();
     this.events.fetch();

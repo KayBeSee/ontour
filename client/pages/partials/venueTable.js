@@ -1,9 +1,9 @@
 var PageView   = require('../base');           // grab base page view
-var EventView = require('./event');  // grab event view
+var VenueView = require('./venue');  // grab venue view
 
 module.exports = PageView.extend({
-  pageTitle: 'Event Collection',
-  // template: require('../../templates/pages/events.hbs'),
+  pageTitle: 'Venue Collection',
+  // template: require('../../templates/pages/venues.hbs'),
 
   initialize: function () {
     this.render();
@@ -13,8 +13,8 @@ module.exports = PageView.extend({
     this.renderWithTemplate();
     this.renderCollection(
       this.collection,
-      EventView,
-      this.queryByHook('event-list'),
+      VenueView,
+      this.queryByHook('venue-list'),
       { parent: this }
     );
     return this;

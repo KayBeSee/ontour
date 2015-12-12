@@ -18,7 +18,7 @@ exports.getById = function(id, done) {
 
 exports.getByName = function(artistName, done) {
   Artist.findOne({'name': artistName}, function (err, artist) {
-    if(err) return handleError(err);
+    if(err) return done(err, null);
     done(null, artist);
   });
 }

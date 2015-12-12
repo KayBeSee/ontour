@@ -19,7 +19,8 @@ module.exports = PageView.extend({
         return new EventTable({
           el         : el,
           parent     : this,
-          collection : this.collection
+          collection : this.collection,
+          template: require('../templates/pages/events.hbs')
         });
       }
     }

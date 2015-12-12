@@ -26,7 +26,7 @@ module.exports = PageView.extend({
   },
 
   kendoGrid: function () {
-    $('#users').kendoGrid({
+    $('#artists').kendoGrid({
       dataSource: {
         sort: {
             field: "name",

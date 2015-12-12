@@ -1,0 +1,32 @@
+<section class="page pageOne">
+  <div class="lists">
+  <div class="header-blocks citys-header row">
+    <div class="col-md-6">
+      <h2>Cities</h2>
+    </div>
+    <div class="col-md-6 text-right pull-right">
+      <a class="btn btn-default btn-md" href="/city/new">Add New City</a>
+    </div>
+  </div>
+  <div class="city-table">
+    <table id="citys" class="table-striped">
+      <thead>
+        <tr>
+          <th data-field="image" id="cityImage">
+            Image
+          </th>
+          <th data-field="name" id="cityName">
+            Name
+          </th>
+          <th data-field="state" id="cityWebsite">
+            State
+          </th>
+          <th>
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody data-hook="city-list"></tbody>
+    </table>
+  </div>
+</section>

@@ -10,7 +10,7 @@ module.exports = PageView.extend({
   initialize: function () {
     this.collection.fetch({
       success: function () {
-        this.render(); // .kendoGrid();
+        this.render().kendoGrid();
       }.bind(this)
     });
   },
@@ -65,20 +65,25 @@ module.exports = PageView.extend({
         [{
           field: "date",
           format: "{0:MM/dd/yyyy}",
+          type: 'date',
           filterable: {
             cell: {
-              showOperators: false
+              showOperators: false,
             }
           }
         },
         {
-          field: "artistName",
+          field: "artists",
+          title: "Artists",
           filterable: {
-            mode: "row"
-          },
-          title: "Ship Name",
-          filterable: {
+            mode: 'row',
+            operators:{
+              string: {
+                contains: 'Artist Name',
+              }
+            },
             cell: {
+              showOperators: false,
               operator: "contains"
             }
           }
@@ -86,6 +91,13 @@ module.exports = PageView.extend({
         {
           field: "location",
           filterable: {
+            multi: true,
+            operators:{
+              string: {
+                endswith: 'State',
+                startswith: 'City'
+              }
+            },
             cell: {
               operator: "gte"
             }
@@ -93,9 +105,16 @@ module.exports = PageView.extend({
         },
         {
           field: "venue",
+          filterable: {
+            cell: {
+              showOperators: false,
+              operator: "ends"
+            }
+          }
         },
          {
           field: "actions",
+          filterable: false
         }]
     });
   },

@@ -4,7 +4,7 @@ var request = require('request');
 // Get Commands
 exports.getAll = function(done) {
   Venue.find({ }, function (err, venues) {
-    if (err) return handleError(err);
+    if (err) return done(err, null);
     done(null, venues);
   });
 }
@@ -45,7 +45,7 @@ exports.updateById = function(id, updatedVenue, done) {
 // Delete Commands
 exports.deleteById = function (id, done){
   Venue.findByIdAndRemove(id, function(err, venue){
-    if (err) return handleError(err);
+    if (err) return done(err, null);
     done(null, venue);
   })
 }

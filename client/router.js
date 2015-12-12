@@ -16,6 +16,10 @@ var VenuesPage        = require('./pages/venues');
 var VenueViewPage     = require('./pages/venue');
 var VenueEditPage     = require('./pages/venue-edit');
 var VenueNewPage      = require('./pages/venue-new');
+var CitiesPage        = require('./pages/cities');
+var CityViewPage      = require('./pages/city');
+var CityEditPage      = require('./pages/city-edit');
+var CityNewPage       = require('./pages/city-new');
 
 module.exports = Router.extend({
   routes: {
@@ -27,21 +31,26 @@ module.exports = Router.extend({
 
     'events'                    : 'events',
     'past-events'               : 'pastEvents',
-    'events/:id'                : 'eventById',
+    'events/:id'                : 'event',
     'events/:id/edit'           : 'eventEdit',
     'event/new'                 : 'eventCreate',
 
     'pullArtistEvents'          : 'pullArtistEvents',
 
     'artists'                   : 'artists',
-    'artists/:artistName/edit'  : 'artistEdit',
     'artists/:artistName'       : 'artist',
+    'artists/:artistName/edit'  : 'artistEdit',
     'artist/new'                : 'artistCreate',
 
     'venues'                    : 'venues',
-    'venues/:venueName/edit'    : 'venueEdit',
     'venues/:venueName'         : 'venue',
+    'venues/:venueName/edit'    : 'venueEdit',
     'venue/new'                 : 'venueCreate',
+
+    'cities'                    : 'cities',
+    'cities/:cityName'          : 'city',
+    'cities/:cityName/edit'     : 'cityEdit',
+    'city/new'                  : 'cityCreate',
 
     '(*path)'                   : 'catchAll'
   },
@@ -61,12 +70,6 @@ module.exports = Router.extend({
     window.location.href = './logout/facebook';
   },
 
-  eventById: function (id) {
-    this.trigger('page', new EventViewPage({
-      id: id
-    }));
-  },
-
   events: function () {
     this.trigger('page', new EventsPage({
       collection: app.events
@@ -76,6 +79,12 @@ module.exports = Router.extend({
   pastEvents: function () {
     this.trigger('page', new PastEventsPage({
       collection: app.events
+    }));
+  },
+
+  event: function (id) {
+    this.trigger('page', new EventViewPage({
+      id: id
     }));
   },
 
@@ -117,14 +126,14 @@ module.exports = Router.extend({
     }));
   },
 
-  artistCreate: function () {
-    this.trigger('page', new ArtistNewPage());
-  },
-
   artistEdit: function (artistName) {
     this.trigger('page', new ArtistEditPage({
       artistName: artistName
     }));
+  },
+
+  artistCreate: function () {
+    this.trigger('page', new ArtistNewPage());
   },
 
   venues: function () {
@@ -139,14 +148,36 @@ module.exports = Router.extend({
     }));
   },
 
-  venueCreate: function () {
-    this.trigger('page', new VenueNewPage());
-  },
-
   venueEdit: function (venueName) {
     this.trigger('page', new VenueEditPage({
       venueName: venueName
     }));
+  },
+
+  venueCreate: function () {
+    this.trigger('page', new VenueNewPage());
+  },
+
+  cities: function () {
+    this.trigger('page', new CitiesPage({
+      collection: app.cities
+    }));
+  },
+
+  city: function (cityName) {
+    this.trigger('page', new CityViewPage({
+      cityName: cityName
+    }));
+  },
+
+  cityEdit: function (cityName) {
+    this.trigger('page', new CityEditPage({
+      cityName: cityName
+    }));
+  },
+
+  cityCreate: function () {
+    this.trigger('page', new CityNewPage());
   },
 
   catchAll: function () {

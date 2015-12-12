@@ -19,15 +19,15 @@ module.exports = View.extend({
     // this marks the correct nav item selected
     this.listenTo(app.router, 'page', this.handleNewPage);
 
-    window.me.fetch({
-      success: function (model) {
-        window.me = model;
-        this.model = model;
-      },
-      error: function (model, response) {
-       console.log(response);
-      }
-    });
+    // window.me.fetch({
+    //   success: function (model) {
+    //     window.me = model;
+    //     this.model = model;
+    //   },
+    //   error: function (model, response) {
+    //    console.log(response);
+    //   }
+    // });
 
   },
   events: {
