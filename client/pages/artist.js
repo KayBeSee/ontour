@@ -20,7 +20,7 @@ module.exports = PageView.extend({
           el         : el,
           parent     : this,
           collection : this.collection,
-          template: require('../templates/pages/events.hbs')
+          template   : require('../templates/pages/events.hbs')
         });
       }
     }
@@ -35,11 +35,7 @@ module.exports = PageView.extend({
       self.model = artistModel;
       self.collection.url = '/api/events/artist/' + artistModel.name;
       self.collection.fetch();
+      self.renderWithTemplate();
     });
-  },
-
-  render: function(){
-    this.renderWithTemplate();
-    return this;
   }
 });

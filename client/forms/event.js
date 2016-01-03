@@ -4,14 +4,27 @@ var ArrayInput = require('ampersand-array-input-view');
 
 
 module.exports = FormView.extend({
+    submitCallback: function(obj) {
+        this.model.type = "Event";
+        this.model.name = obj.name;
+        this.model.datetime = obj.datetime;
+        this.model.ticket_url = obj.ticket_url;
+        this.model.picture = obj.picture;
+        this.model.artists = obj.artists;
+        this.model.venue = obj.venue;
+        this.model.city = obj.city;
+        this.model.state = obj.state;
+        this.parent.collection.add(this.model);
+        this.parent.collection.save(this.model);
+    },
     fields: function () {
         return [
             new InputView({
-                label: 'Title',
-                name: 'title',
-                value: this.model && this.model.title,
+                label: 'Name',
+                name: 'name',
+                value: this.model && this.model.name,
                 required: false,
-                placeholder: 'Title',
+                placeholder: 'Name',
                 parent: this
             }),
             new InputView({

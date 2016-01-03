@@ -10,7 +10,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/events/:id', function (req, res) {
-    EventController.getById( req.params._id, function (err, event) {
+    EventController.getById( req.params.id, function (err, event) {
       res.send(event);
     });
   });

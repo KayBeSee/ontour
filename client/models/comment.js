@@ -9,6 +9,9 @@ module.exports = AmpersandModel.extend({
     datetime: 'string',
     message: 'string',
     score: 'number',
+    parentId: 'string',
+    parentName: 'string',
+    parentType: 'string',
     author: {
       _id: 'string',
       name: 'string',

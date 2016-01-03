@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 
 var venueSchema = new Schema({
   id: ObjectId,
+  type: String,
   name: String,
   address: String,
   city: String,

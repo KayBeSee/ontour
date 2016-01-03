@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 
 var citySchema = new Schema({
   id: ObjectId,
+  type: String,
   name: String,
   state: String,
   picture: String

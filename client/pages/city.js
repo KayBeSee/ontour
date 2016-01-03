@@ -53,6 +53,7 @@ module.exports = PageView.extend({
       self.venues.fetch();
       self.events.url = '/api/city/' + cityModel.name + '/events';
       self.events.fetch();
+      self.renderWithTemplate();
     });
   },
 

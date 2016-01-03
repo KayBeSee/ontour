@@ -26,6 +26,7 @@ exports.getByName = function(artistName, done) {
 // Post Commands
 var addNew = exports.addNew = function(artist, done) {
   var newArtist = new Artist({
+    type: 'Artist',
     name: artist.name,
     website: artist.website,
     facebook: artist.facebook,

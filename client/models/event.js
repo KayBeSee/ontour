@@ -4,9 +4,11 @@ var moment = require('moment');
 
 module.exports = AmpersandModel.extend({
   idAttribute: '_id',
+  typeAttribute: 'Event',
   props: {
     _id: 'string',
-    title: 'string',
+    type: 'string',
+    name: 'string',
     datetime: 'date',
     ticket_url: 'string',
     picture: 'string',
@@ -27,10 +29,10 @@ module.exports = AmpersandModel.extend({
     }]
   },
   derived: {
-    mainImage: {
-      deps: ['artists'],
-      fn: function () {
-        return this.artists[0].image_url;
+    editUrl: {
+      deps: ['_id'],
+      fn: function() {
+        return '/events/' + this._id + '/edit'
       }
     },
     readableDate: {

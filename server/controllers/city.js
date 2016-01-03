@@ -36,6 +36,7 @@ exports.getEvents = function(cityName, done) {
 // Post Commands
 var addNew = exports.addNew = function(city, done) {
   var newCity = new City({
+    type: 'City',
     name: city.name,
     state: city.state,
     picture: city.picture,

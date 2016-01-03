@@ -8,52 +8,44 @@
     'model.url': {
       hook: 'url'
     },
+    'model.title':{
+      hook: 'title'
+    },
     'model.datetime': {
       hook: 'datetime'
     },
+    'model.readableDate': {
+      hook: 'readableDate'
+    },
     'model.ticket_url': {
-      hook: 'ticket_url'
+      hook: 'ticket_url',
+      type: 'attribute',
+      name: 'href'
     },
-    'model.artists.name': {
-      hook: 'artists_name'
-    },
-    'model.artists.url': {
-      hook: 'artists_url'
-    },
-    'model.artists.mbid': {
-      hook: 'artists_mbid'
-    },
-    'model.venue.id': {
-      hook: 'venue_id'
-    },
-    'model.venue.url': {
-      hook: 'venue_url'
+    'model.artists': {
+      hook: 'artists',
+      type: 'text'
     },
     'model.venue': {
       hook: 'venue'
     },
-    'model.venue.city': {
-      hook: 'venue_city'
+    'model.city': {
+      hook: 'city'
     },
-    'model.venue.region': {
-      hook: 'venue_region'
+    'model.state': {
+      hook: 'state'
     },
-    'model.venue.country': {
-      hook: 'venue_country'
-    },
-    'model.venue.latitude': {
-      hook: 'venue_latitude'
-    },
-    'model.venue.longitude': {
-      hook: 'venue_longitude'
-    },
-    'model.ticket_status': {
-      hook: 'ticket_status'
-    },
-    'model.on_sale_datetime': {
-      hook: 'on_sale_datetime'
+    'model.picture': {
+      hook: 'picture',
+      name: 'src',
+      type: 'attribute'
     },
     'model.comments': {
       hook: 'comments'
+    },
+    'model.editUrl': {
+      hook: 'editUrl',
+      type: 'attribute',
+      name: 'href'
     }
   };

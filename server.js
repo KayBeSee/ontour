@@ -152,6 +152,7 @@ passport.use('facebook', new FacebookStrategy({
 var api = require('./server/api');
 
 app.get('/authenticate', function (req, res){
+  console.log(req);
   if(req.session.passport.user) {
     api.getUserById(req.session.passport.user, function (err, user) {
       if(err) return res.json(err);

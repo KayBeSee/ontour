@@ -20,6 +20,7 @@ exports.getByName = function(name, done) {
 // Post Commands
 var addNew = exports.addNew = function(venue, done) {
   var newVenue = new Venue({
+    type: 'Venue',
     name: venue.name,
     address: venue.address,
     city: venue.city,

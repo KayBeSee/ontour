@@ -3,7 +3,7 @@ var PageView = require('./base');
 var eventbindings = require('../bindings/_eventbindings');
 var EventModel = require('../models/event');
 var CommentsView = require('./partials/comments');
-var Collection = require('ampersand-collection');
+var Collection = require('ampersand-rest-collection');
 var CommentModel = require('../models/comment');
 var CommentForm = require('../forms/comment');
 
@@ -49,14 +49,10 @@ module.exports = PageView.extend({
     app.events.getOrFetch(spec.id, function (err, eventModel) {
       if (err) alert('couldn\'t find a model with id: ' + spec.id);
       self.model = eventModel;
-      self.collection.add(eventModel.comments);
+      self.collection.url = '/api/comments/parent/' + spec.id;
+      self.collection.fetch();
     });
   },
-
-  // render: function() {
-  //   this.renderWithTemplate();
-  //   return this;
-  // },
 
   attend: function() {
     window.me.addEvent(this.model);

@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 
 var artistSchema = new Schema({
   id: ObjectId,
+  type: String,
   name: String,
   website: String,
   facebook: String,

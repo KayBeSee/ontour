@@ -51,6 +51,7 @@ module.exports = {
 
       // we have what we need, we can now start our router and show the appropriate page
       self.router.history.start({pushState: true, root: '/'});
+      // self.router.navigate(window.location.pathname.replace(/^\//, ''), true);
     });
   },
 

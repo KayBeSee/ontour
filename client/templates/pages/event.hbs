@@ -2,18 +2,18 @@
 
   <div class="row">
     <div class="medium-12 column">
-      <h2>{{ model.title }}</h2>
+      <h2 data-hook="title">{{ model.title }}</h2>
     </div>
   </div>
 
   <div class="row" style="margin-top: 15px">
     <div class="medium-5 small-12 column">
-      <img src="{{ model.picture }}" />
+      <img data-hook="picture" src="{{ model.picture }}" />
     </div>
     <div class="medium-7 small-12 column">
       <div class="row">
         <div class="medium-12 small-12 column">
-          <h3>{{ model.readableDate }}</h3>
+          <h3 data-hook="readableDate">{{ model.readableDate }}</h3>
         </div>
       </div>
       <div class="row">
@@ -24,37 +24,36 @@
         {{/if}}
       </div>
       <div class="row" style="padding-top: 15px;">
-        <a class="btn-lg btn-primary btn-block text-center" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>
+        <a class="btn-lg btn-primary btn-block text-center" href="{{ model.ticket_url }}" target="_blank" data-hook="ticket_url">Buy Tickets</a>
       </div>
       <div class="row" style="padding-top: 15px;">
-        <a class="btn-lg btn-primary btn-block text-center" href="{{ model._id }}/edit">Edit Event</a>
+        <a class="btn-lg btn-primary btn-block text-center" href="{{ model._id }}/edit" data-hook="editUrl">Edit Event</a>
       </div>
     <div class="row">
       <div class="medium-12 small-12 column">
       <h2>Artist Information</h2>
-        {{#each model.artists}}
-        <b>Name:</b> <a href="/artists/{{ this }}">{{ this }}</a>  <br />
-        {{/each}}
+        <b>Name:</b> <a data-hook="artists"></a>  <br />
       </div>
     </div>
     <div class="row">
       <div class="medium-7 small-12 column">
         <h2>Venue Information</h2>
-        <b>Name:</b> <a href="/venues/{{ model.venue }} ">{{ model.venue }}</a> <br />
-        <b>City:</b> {{ model.city }} <br />
-        <b>Region:</b> {{ model.state }}  <br />
+        <b>Name:</b> <a data-hook="venue" href="/venues/{{ model.venue }} ">{{ model.venue }}</a> <br />
+        <b>City:</b> <span data-hook="city">{{ model.city }} </span><br />
+        <b>Region:</b> <span data-hook="state">{{ model.state }}  </span><br />
       </div>
     </div>
   </div>
-
-
-  <div data-hook="comments"></div>
-  <form data-hook="comment-form">
-    <fieldset data-hook="field-container">
-    </fieldset>
-    <div class="buttons">
-      <button type="submit" class="button small" data-hook="submit">Submit</button>
-    </div>
-  </form>
+</div>
+  <div class="row">
+    <div data-hook="comments"></div>
+    <form data-hook="comment-form">
+      <fieldset data-hook="field-container">
+      </fieldset>
+      <div class="buttons">
+        <button type="submit" class="button small" data-hook="submit">Submit</button>
+      </div>
+    </form>
+  </div>
 </section>
 

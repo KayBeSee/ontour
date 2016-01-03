@@ -60,7 +60,8 @@ exports.getByArtistName = function(artistName, done) {
 var addNew = exports.addNew = function(event, done) {
   var newEvent = new Event({
     bitId: event.id,
-    title: event.title,
+    type: 'Event',
+    name: event.name,
     datetime: event.datetime,
     ticket_url: event.ticket_url,
     picture: event.picture,
@@ -79,6 +80,8 @@ exports.addByArtistName = function(artistName, done) {
   request('http://api.bandsintown.com/artists/' + artistName + '/events.json?api_version=2.0&app_id=kaybesee&date=all', function (err, response, events) {
     var artistEvents = JSON.parse(events);
     artistEvents.forEach(function (current, index, array) {
+      current.type = "Event";
+      current.name = current.title;
       current.city = current.venue.city;
       current.state = current.venue.region
       current.venue = current.venue.name;

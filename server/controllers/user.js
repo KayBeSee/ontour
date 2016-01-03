@@ -25,6 +25,7 @@ exports.getByFbId = function(id, done) {
 // Post Commands
 exports.addNew = function(user, done) {
   var newUser = new User({
+    type: 'User',
     // TODO: Add function
   });
 }
