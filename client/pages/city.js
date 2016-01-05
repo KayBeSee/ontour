@@ -1,7 +1,7 @@
 /* global app, $, alert */
 var PageView          = require('./base');
 var citybindings      = require('../bindings/_citybindings');
-var EventTable        = require('./partials/eventTable');
+var EventTable        = require('./events');
 var VenueTable        = require('./partials/venueTable');
 var Collection        = require('ampersand-rest-collection');
 var EventModel        = require('../models/event');
