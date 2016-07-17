@@ -5,7 +5,6 @@ var mongoose = require('mongoose')
    ,ObjectId = Schema.ObjectId;
 
 var venueSchema = new Schema({
-  id: ObjectId,
   type: String,
   name: String,
   address: String,

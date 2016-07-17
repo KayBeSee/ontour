@@ -1,34 +1,35 @@
 var AmpersandModel = require('ampersand-model');
 var moment = require('moment');
 
-
 module.exports = AmpersandModel.extend({
   idAttribute: '_id',
   typeAttribute: 'Event',
   props: {
     _id: 'string',
-    type: 'string',
     name: 'string',
     datetime: 'date',
     ticket_url: 'string',
     picture: 'string',
     artists: 'array',
-    venue: 'string',
-    city: 'string',
-    state: 'string',
-    comments: [{
+    venue: {
       _id: 'string',
-      datetime: 'string',
-      message: 'string',
-      score: 'number',
-      author: {
-        _id: 'string',
-        name: 'string',
-        photo: 'string',
-      }
-    }]
+      name: 'string',
+      city: 'string',
+      state: 'string'
+    }
   },
   derived: {
+    title: {
+      deps: ['name', 'artists', 'venue'],
+      fn: function() {
+        if(this.name) {
+          return this.name;
+        } else {
+          var artistNames = this.artists.map(function(artist){ return artist.name});
+          return artistNames.join(', ') + ' @ ' + this.venue.name;
+        }
+      }
+    },
     editUrl: {
       deps: ['_id'],
       fn: function() {
@@ -39,7 +40,7 @@ module.exports = AmpersandModel.extend({
       deps: ['datetime'],
       fn: function () {
         var date = new Date(this.datetime);
-        return moment(date).format('LLLL');
+        return moment(date).format('LL');
       }
     },
     sortableDate: {

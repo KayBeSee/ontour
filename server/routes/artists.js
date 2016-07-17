@@ -4,9 +4,16 @@ module.exports = function(app) {
 
   // Get Routes
   app.get('/api/artists', function (req, res) {
-    ArtistController.getAll( function (err, artists) {
-      res.send(artists);
-    });
+    if(req.query.name){
+      ArtistController.searchByName( req.query.name, function (err, artist) {
+        res.send(artist);
+      });
+    }
+    else {
+      ArtistController.getAll( function (err, venues) {
+        res.send(venues);
+      });
+    }
   });
 
   app.get('/api/artists/:name', function (req, res) {

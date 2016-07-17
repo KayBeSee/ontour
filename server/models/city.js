@@ -5,7 +5,6 @@ var mongoose = require('mongoose')
    ,ObjectId = Schema.ObjectId;
 
 var citySchema = new Schema({
-  id: ObjectId,
   type: String,
   name: String,
   state: String,

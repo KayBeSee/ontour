@@ -1,31 +1,21 @@
 // Event Model
 
-var mongoose = require('mongoose')
-   ,Schema = mongoose.Schema
-   ,ObjectId = Schema.ObjectId;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+
+require('./comment');
+require('./artist');
+require('./venue');
 
 var eventSchema = new Schema({
-  id: ObjectId,
-  type: String,
   name: String,
+  festival: Boolean,
   datetime: Date,
   ticket_url: String,
   picture: String,
-  artists: [String],
-  venue: String,
-  city: String,
-  state: String,
-  comments: [{
-      _id: String,
-      datetime: String,
-      message: String,
-      score: Number,
-      author: {
-        _id: ObjectId,
-        name: String,
-        picture: String,
-      }
-    }]
+  artists: [{ type: ObjectId, ref: 'Artist' }],
+  venue: { type: ObjectId, ref: 'Venue' }
   });
 
 module.exports = mongoose.model('Event', eventSchema);

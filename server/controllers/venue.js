@@ -16,6 +16,13 @@ exports.getByName = function(name, done) {
   });
 }
 
+exports.searchByName = function(term, done){
+  Venue.find({ name: {$regex : "^" + term}}, function(err, venues){
+    if (err) done(err, null);
+    done(null, venues);
+  });
+}
+
 
 // Post Commands
 var addNew = exports.addNew = function(venue, done) {

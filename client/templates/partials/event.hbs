@@ -1,10 +1,8 @@
 <tr {{#if model.userIsAttending }}class="bg-success"{{/if}}>
   <td>{{ model.sortableDate }}</td>
-  <td>{{#each model.artists}} <a href="/artists/{{ this }}">{{this}}</a>, {{/each}}</td>
-  <td>{{ model.city }}, {{ model.state }}</td>
-  <td>
-    <a href="/venues/{{ model.venue }}">{{ model.venue }}</a>,
-  </td>
+  <td data-hook="title"></td>
+  <td><span data-hook="venue-city"></span>, <span data-hook="venue-state"></span></td>
+  <td><a data-hook="venue-name"></a></td>
   <td>
     <a class="btn-primary btn-xs" href="{{ model.ticket_url }}" target="_blank">Buy Tickets</a>
     <a class="btn-primary btn-xs" href="/events/{{ model._id }}">Details</a>

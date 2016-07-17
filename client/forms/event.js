@@ -1,10 +1,15 @@
 var FormView = require('ampersand-form-view');
 var InputView = require('ampersand-input-view');
 var ArrayInput = require('ampersand-array-input-view');
+var AutoCompleteView = require('../../autocomplete_view.js');
+var ArrayAutoCompleteView = require('../../array_autocomplete_view.js');
+var VenuesCollection = require('../models/venues');
+var ArtistsCollection = require('../models/artists');
 
 
 module.exports = FormView.extend({
     submitCallback: function(obj) {
+        console.log('submitCallback', obj);
         this.model.type = "Event";
         this.model.name = obj.name;
         this.model.datetime = obj.datetime;
@@ -12,8 +17,6 @@ module.exports = FormView.extend({
         this.model.picture = obj.picture;
         this.model.artists = obj.artists;
         this.model.venue = obj.venue;
-        this.model.city = obj.city;
-        this.model.state = obj.state;
         this.parent.collection.add(this.model);
         this.parent.collection.save(this.model);
     },
@@ -59,38 +62,42 @@ module.exports = FormView.extend({
                 placeholder: 'Picture',
                 parent: this
             }),
-            new InputView({
+            new AutoCompleteView({
                 label: 'Venue',
                 name: 'venue',
+                collection: new VenuesCollection(),
+                queryKey: 'name',
+                idAttribute: '_id',
+                textAttribute: '_id',
+                placeholder: 'Type Venue Name',
+                minKeywordLength: 3,
+                maxResults: 10,
                 value: this.model && this.model.venue,
-                required: false,
-                placeholder: 'Venue Name',
+                type: 'text',
                 parent: this
             }),
-            new InputView({
-                label: 'City',
-                name: 'city',
-                value: this.model && this.model.city,
-                required: false,
-                placeholder: 'Venue City',
-                parent: this
-            }),
-            new InputView({
-                label: 'State',
-                name: 'state',
-                value: this.model && this.model.state,
-                required: false,
-                placeholder: 'Venue State',
-                parent: this
-            }),
-            new ArrayInput({
+            new ArrayAutoCompleteView({
                 label: 'Artists',
                 name: 'artists',
+                collection: new ArtistsCollection(),
+                queryKey: 'name',
+                idAttribute: '_id',
+                textAttribute: '_id',
+                placeholder: 'Type Artist Name',
+                minKeywordLength: 3,
+                maxResults: 10,
                 value: this.model && this.model.artists || [],
-                required: false,
-                placeholder: 'Artists',
+                type: 'text',
                 parent: this
-            })
+            }),
+            // new ArrayInput({
+            //     label: 'Artists',
+            //     name: 'artists',
+            //     value: this.model && this.model.artists || [],
+            //     required: false,
+            //     placeholder: 'Artists',
+            //     parent: this
+            // })
         ];
     }
 });

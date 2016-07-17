@@ -4,16 +4,32 @@ module.exports = function(app) {
 
   // Get Routes
   app.get('/api/venues', function (req, res) {
-    VenueController.getAll( function (err, venues) {
-      res.send(venues);
-    });
+    if(req.query.name){
+      VenueController.searchByName( req.query.name, function (err, artist) {
+        res.send(artist);
+      });
+    }
+    else {
+      VenueController.getAll( function (err, venues) {
+        res.send(venues);
+      });
+    }
   });
 
-  app.get('/api/venue/:name', function (req, res) {
-    VenueController.getByName( req.params.name, function (err, artist) {
-      res.send(artist);
-    });
+  app.get('/api/venue', function (req, res) {
+    console.log(req.query.name);
+    if(req.query.name){
+      VenueController.getByName( req.query.name, function (err, artist) {
+        res.send(artist);
+      });
+    }
   });
+
+  // app.get('/api/venue/:name', function (req, res) {
+  //   VenueController.getByName( req.params.name, function (err, artist) {
+  //     res.send(artist);
+  //   });
+  // });
 
   // Put Routes
   app.put('/api/venues/:id', function (req, res) {

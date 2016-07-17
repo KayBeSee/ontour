@@ -5,7 +5,6 @@ var mongoose = require('mongoose')
    ,ObjectId = Schema.ObjectId;
 
 var artistSchema = new Schema({
-  id: ObjectId,
   type: String,
   name: String,
   website: String,

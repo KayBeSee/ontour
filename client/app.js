@@ -5,7 +5,7 @@ var config = require('clientconfig');
 
 var Router = require('./router');
 var tracking = require('./helpers/metrics');
-var MainView = require('./views/main');
+var MainView = require('./main');
 var domReady = require('domready');
 
 var Me = require('./models/me');
@@ -13,7 +13,7 @@ var Users = require('./models/users');
 var Events = require('./models/events');
 var Artists = require('./models/artists');
 var Venues = require('./models/venues');
-var Cities = require('./models/cities');
+var Posts = require('./models/posts');
 
 module.exports = {
   // this is the the whole app initter
@@ -27,12 +27,13 @@ module.exports = {
     this.events = new Events();
     this.artists = new Artists();
     this.venues = new Venues();
-    this.cities = new Cities();
+    this.posts = new Posts();
 
     this.users.fetch();
     this.events.fetch();
     this.artists.fetch();
     this.venues.fetch();
+    this.posts.fetch();
 
     // init our URL handlers and the history tracker
     this.router = new Router();

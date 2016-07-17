@@ -3,21 +3,21 @@ var request = require('request');
 
 // Get Commands
 exports.getAll = function(done) {
-  Comment.find({ }, function (err, comments) {
+  Comment.find().populate('author parent.item').exec( function (err, comments) {
     if (err) return done(err, null);
     done(null, comments);
   });
 }
 
 exports.getById = function(id, done) {
-  Comment.findById({'_id' : id }, function (err, comment) {
+  Comment.findById({'_id' : id }).populate('author parent.item').exec( function (err, comment) {
     if (err) return done(err, null);
     done(null, comment);
   });
 }
 
 exports.getByParentId = function(id, done) {
-  Comment.find({'parentId': id }, function (err, comments) {
+  Comment.find({'parent.item': id }).populate('author parent.item').exec( function (err, comments) {
     if (err) return done(err, null);
     done(null, comments);
   });
@@ -28,15 +28,12 @@ var addNew = exports.addNew = function(comment, done) {
   var newComment = new Comment({
     datetime: comment.datetime,
     message: comment.message,
-    parentId: comment.parentId,
-    parentName: comment.parentName,
-    parentType: comment.parentType,
+    parent: {
+      item: comment.parent.item,
+      kind: comment.parent.kind
+    },
     score: comment.score,
-    author:{
-      _id: comment.author._id,
-      name: comment.author.name,
-      picture: comment.author.picture
-    }
+    author: comment.author
   });
   newComment.save( function (err, comment) {
     if (err) done(err, null);

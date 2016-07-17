@@ -1,22 +1,20 @@
 // Comment Model
-
-var mongoose = require('mongoose')
-   ,Schema = mongoose.Schema
-   ,ObjectId = Schema.ObjectId;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var commentSchema = new Schema({
-  id: ObjectId,
   datetime: Date,
   message: String,
-  parentId: String,
-  parentName: String,
-  parentType: String,
+  parent: {
+    kind: String,
+    item: { type: ObjectId, refPath: 'parent.kind' }
+  },
   score: Number,
-  author: {
-    _id: ObjectId,
-    name: String,
-    picture: String
-  }
+  author: { type: ObjectId, ref: 'User' }
 });
+
+commentSchema.plugin(deepPopulate, {});
 
 module.exports = mongoose.model('Comment', commentSchema);

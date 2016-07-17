@@ -5,4 +5,5 @@ module.exports = function(app) {
   require('./comments')(app);
   require('./users')(app);
   require('./cities')(app);
+  require('./posts')(app);
 }

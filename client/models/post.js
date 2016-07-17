@@ -9,10 +9,6 @@ module.exports = AmpersandModel.extend({
     message: 'string',
     score: 'number',
     author: 'any',
-    parent: {
-      item: 'object',
-      kind: 'string'
-    }
   },
   derived: {
     readableDate: {

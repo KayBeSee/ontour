@@ -11,13 +11,19 @@ module.exports = {
   'model.score': {
     hook: 'score'
   },
-  'model.author._id': {
-    hook: 'author_id'
+  'model.author.first_name': {
+    hook: 'author-first-name'
   },
-  'model.author.name': {
-    hook: 'author_name'
+  'model.author.last_name': {
+    hook: 'author-last-name'
   },
   'model.author.photo': {
-    hook: 'author_photo'
+    hook: 'author-photo'
+  },
+  'model.author.viewUrl': {
+    hook: 'author-view-url'
+  },
+  'model.parent.item.name': {
+    hook: 'event-name'
   }
 };

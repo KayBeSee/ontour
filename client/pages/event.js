@@ -36,7 +36,20 @@ module.exports = PageView.extend({
         return new CommentForm({
           el: el,
           model: new CommentModel(),
-          parent: this
+          parent: this,
+          submitCallback: function(obj){
+            this.parent.collection.url = '/api/comments'
+            this.model = new CommentModel();
+            this.model.datetime =  Date.now();
+            this.model.message = obj.message;
+            this.model.parent = {};
+            this.model.parent.item = this.parent.model._id;
+            this.model.parent.kind = 'Event';
+            this.model.score = 0;
+            this.model.author = window.me._id;
+            this.parent.collection.add(this.model);
+            this.parent.collection.create(this.model);
+          }
         });
       }
     }

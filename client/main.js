@@ -11,23 +11,23 @@ var domify       = require('domify');
 var dom          = require('ampersand-dom');
 var setFavicon   = require('favicon-setter');
 
-require('../helpers/metrics');
+require('./helpers/metrics');
 
 module.exports = View.extend({
-  template: require('../templates/body.hbs'),
+  template: require('./templates/body.hbs'),
   initialize: function () {
     // this marks the correct nav item selected
     this.listenTo(app.router, 'page', this.handleNewPage);
 
-    // window.me.fetch({
-    //   success: function (model) {
-    //     window.me = model;
-    //     this.model = model;
-    //   },
-    //   error: function (model, response) {
-    //    console.log(response);
-    //   }
-    // });
+  window.me.fetch({
+      success: function (model) {
+        window.me = model;
+        this.model = model;
+      },
+      error: function (model, response) {
+       window.me = model;
+      }
+    });
 
   },
   events: {
@@ -35,7 +35,7 @@ module.exports = View.extend({
   },
   render: function () {
     // some additional stuff we want to add to the document head
-    document.head.appendChild(domify(require('../templates/head.hbs')()));
+    document.head.appendChild(domify(require('./templates/head.hbs')()));
 
     // main renderer
     this.renderWithTemplate({model: window.me});

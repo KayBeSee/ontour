@@ -7,7 +7,6 @@ module.exports = PageView.extend({
   pageTitle: 'edit event',
   template: require('../templates/pages/event-edit.hbs'),
   events: {
-    'focus #date' : 'kendoDatePicker',
     'click [data-hook=delete]': 'deleteEvent'
   },
   initialize: function (options) {
@@ -22,11 +21,6 @@ module.exports = PageView.extend({
       this.model.url = '/api/events/create';
     }
   },
-  kendoDatePicker: function(){
-    $('#date').kendoDatePicker({
-      format: 'MM-dd-yyyy'
-    });
-  },
   deleteEvent: function(){
     this.model.destroy();
   },
@@ -40,6 +34,7 @@ module.exports = PageView.extend({
           el: el,
           model: this.model,
           submitCallback: function (data) {
+            console.log('data', data);
             this.model.save(data, {
               wait: true,
               error: function(err) {

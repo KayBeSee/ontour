@@ -16,6 +16,13 @@ exports.getById = function(id, done) {
   });
 }
 
+exports.searchByName = function(term, done){
+  Artist.find({ name: {$regex : "^" + term}}, function(err, artists){
+    if (err) done(err, null);
+    done(null, artists);
+  });
+}
+
 exports.getByName = function(artistName, done) {
   Artist.findOne({'name': artistName}, function (err, artist) {
     if(err) return done(err, null);

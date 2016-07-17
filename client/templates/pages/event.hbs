@@ -8,12 +8,12 @@
 
   <div class="row" style="margin-top: 15px">
     <div class="medium-5 small-12 column">
-      <img data-hook="picture" src="{{ model.picture }}" />
+      <img data-hook="picture" />
     </div>
     <div class="medium-7 small-12 column">
       <div class="row">
         <div class="medium-12 small-12 column">
-          <h3 data-hook="readableDate">{{ model.readableDate }}</h3>
+          <h3 data-hook="readableDate"></h3>
         </div>
       </div>
       <div class="row">
@@ -38,9 +38,9 @@
     <div class="row">
       <div class="medium-7 small-12 column">
         <h2>Venue Information</h2>
-        <b>Name:</b> <a data-hook="venue" href="/venues/{{ model.venue }} ">{{ model.venue }}</a> <br />
-        <b>City:</b> <span data-hook="city">{{ model.city }} </span><br />
-        <b>Region:</b> <span data-hook="state">{{ model.state }}  </span><br />
+        <b>Name:</b> <a data-hook="venue-name" href="/venues/{{ model.venue }} ">{{ model.venue }}</a> <br />
+        <b>City:</b> <span data-hook="venue-city">{{ model.city }} </span><br />
+        <b>Region:</b> <span data-hook="venue-state">{{ model.state }}  </span><br />
       </div>
     </div>
   </div>

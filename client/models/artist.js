@@ -3,6 +3,7 @@ var AmpersandModel = require('ampersand-model');
 
 module.exports = AmpersandModel.extend({
   idAttribute: 'name',
+  typeAttribute: 'Artist',
   props: {
     _id: 'string',
     name: ['string'],

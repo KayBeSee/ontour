@@ -1,16 +1,15 @@
 var PageView   = require('./base');           // grab base page view
-var ArtistView = require('../pages/partials/artist');  // grab user view
+var PostView = require('../pages/partials/post');  // grab user view
 process.config = require('../../config');
 
 
 module.exports = PageView.extend({
-  pageTitle: 'Artist Collection',
-  template: require('../templates/pages/artists.hbs'),
+  pageTitle: 'Posts',
+  template: require('../templates/pages/cities.hbs'),
 
   initialize: function () {
     this.collection.fetch({
-      success: function (collection, response, options) {
-        console.log('artistoptions', options);
+      success: function () {
         this.render().kendoGrid();
       }.bind(this)
     });
@@ -20,14 +19,14 @@ module.exports = PageView.extend({
     this.renderWithTemplate();
     this.renderCollection(
       this.collection,
-      ArtistView,
-      this.queryByHook('artist-list')
+      PostView,
+      this.queryByHook('city-list')
     );
     return this;
   },
 
   kendoGrid: function () {
-    $('#artists').kendoGrid({
+    $('#cities').kendoGrid({
       dataSource: {
         sort: {
             field: "name",

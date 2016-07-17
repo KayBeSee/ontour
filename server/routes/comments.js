@@ -31,6 +31,7 @@ module.exports = function(app) {
   // Post Routes
   app.post('/api/comments', function (req, res) {
     CommentController.addNew(req.body, function (err, comment) {
+      console.log('body, bitch:', req.body);
       if(err) console.log(err);
       res.send(comment);
     });
